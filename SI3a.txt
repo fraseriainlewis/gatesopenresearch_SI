@@ -1,0 +1,62 @@
+ /**** TABLE 1 - selected OU models and simple linear reg for TZ using nlmixed. **/ /** READ IN THE RAW DATA **/
+FILENAME REFFILE '/folders/myfolders/TZallchildrenSAS.csv';
+ PROC IMPORT DATAFILE=REFFILE DBMS=CSV
+OUT=work.TZ replace; datarow=2; GETNAMES=YES; guessingrows=MAX;
+RUN;
+ PROC CONTENTS DATA=WORK.TZ; RUN;
+/** check that subjects are sorted - essential for RVs **/
+ proc sort data=TZ out=TZ; by subjid;
+run;
+ods html5 file='/folders/myfolders/SI2output.html'; /** FIXED EFFECT OU */
+ proc nlmixed data=TZ;
+parms sigma2=10 theta=5 mu=0.5;
+mean = exp((-agects1+agects0)*theta)*(zwfl0-mu) + mu;
+var=(exp(-2*agects1*theta)*( exp(2*agects1*theta) -exp(2*agects0*theta) )*sigma2)/(2*theta); model zwfl1 ~ normal(mean,var);
+run;
+/** LINEAR REGRESSION */
+ proc nlmixed data=TZ;
+parms sigma2=10 a1=1.0 a2=1.0; mean = a1+a2*agects1; var=sigma2;
+model zwfl1 ~ normal(mean,var);
+run;
+/** OU TWO RANDOM EFFECTs - in MU and THETA **/
+ proc nlmixed data=TZ;
+parms sigma2=10 theta=9 mu=0. s2b1=1.0 cb12=1.0 s2b2=1.0;
+mu_ind=mu+b1;
+theta_ind=theta+b2;
+mean = exp((-agects1+agects0)*theta_ind)*(zwfl0-mu_ind) + mu_ind;
+mean_marg = exp((-agects1+agects0)*theta)*(zwfl0-mu) + mu;
+var=(exp(-2*agects1*theta_ind)*( exp(2*agects1*theta_ind) -exp(2*agects0*theta_ind) )*sigma2)/(2*theta_ind); model zwfl1 ~ normal(mean,var);
+/*random b1 ~ normal(0,s2u) subject=subjid;*/
+random b1 b2 ~ normal([0,0],[s2b1,cb12,s2b2]) subject=subjid; /*predict mean_marg out=meanRV2;*//** marginal residuals **/ /*predict mean out=meanCRV2;*//** conditional residuals **/
+run;
+/** LINEAR MIXED REGRESSION - random intercept + random slope + correlated */
+ proc nlmixed data=TZ;
+parms sigma2=1.0 a1=1.0 a2=1.0 s2b1=1 cb12=1.0 s2b2=1.0; a1_ind=a1+b1;
+a2_ind=a2+b2;
+mean = a1_ind+a2_ind*agects1;
+mean_marg = a1+a2*agects1;
+var=sigma2;
+model zwfl1 ~ normal(mean,var);
+random b1 b2 ~ normal([0,0],[s2b1,cb12,s2b2]) subject=subjid; /*predict mean_marg out=meanLinearMixed;*/ /** marginal residuals **/ /*predict mean out=meanCLinearMixed;*/ /** conditional residuals **/
+run;
+/** Linear mixed reg */
+/*proc export data=work.meanLinearMixed
+outfile='/folders/myfolders/OUfitsLinearMixed.csv' dbms=csv
+replace;
+run;
+proc export data=work.meanCLinearMixed
+outfile='/folders/myfolders/OUfitsCLinearMixed.csv' dbms=csv
+replace;
+run;
+*/
+/** two random intercepts per subject in mu and theta */ /*proc export data=work.meanRV2
+outfile='/folders/myfolders/OUfitsRV2.csv' dbms=csv
+replace;
+run;*/
+/** two random intercepts per subject in mu and theta */
+ 
+  /*proc export data=work.meanCRV2 outfile='/folders/myfolders/OUfitsCRV2.csv' dbms=csv
+replace;
+run;
+*/
+ods html5 close;

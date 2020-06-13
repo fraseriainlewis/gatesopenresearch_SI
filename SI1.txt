@@ -1,0 +1,92 @@
+ /*** TABLE 1 TZ individual selected children models *************/ /** READ IN THE RAW DATA **/
+FILENAME REFFILE '/folders/myfolders/TZallchildrenSAS.csv';
+ PROC IMPORT DATAFILE=REFFILE DBMS=CSV
+OUT=work.TZ replace; datarow=2; GETNAMES=YES; guessingrows=MAX;
+RUN;
+ PROC CONTENTS DATA=WORK.TZ; RUN; /** 9, 103, 2 100 **/
+/** child id=9 **/
+ data child; set TZ;
+if subjidN=9; run;
+ods html5 file='/folders/myfolders/SI1output.html'; /** OU */
+ proc nlmixed data=child;
+parms sigma2=5 theta=8 mu=0.2;
+mean = exp((-agects1+agects0)*theta)*(zwfl0-mu) + mu;
+var=(exp(-2*agects1*theta)*( exp(2*agects1*theta) -exp(2*agects0*theta) )*sigma2)/(2*theta); model zwfl1 ~ normal(mean,var);
+predict mean out=meanOU9; run;
+/** LINEAR REGRESSION */
+ proc nlmixed data=child;
+parms sigma2=10 a1=1.0 a2=1.0; mean = a1+a2*agects1; var=sigma2;
+model zwfl1 ~ normal(mean,var); predict mean out=meanLM9;
+run;
+ proc export data=work.meanOU9 outfile='/folders/myfolders/OUfitschild9.csv' dbms=csv
+replace;
+run;
+ proc export data=work.meanLM9 outfile='/folders/myfolders/LMfitschild9.csv' dbms=csv
+replace;
+run;
+/** child id=103 **/
+ data child;
+set TZ;
+if subjidN=103; run;
+/** OU */
+ proc nlmixed data=child;
+parms sigma2=5 theta=10 mu=-1.2;
+mean = exp((-agects1+agects0)*theta)*(zwfl0-mu) + mu;
+var=(exp(-2*agects1*theta)*( exp(2*agects1*theta) -exp(2*agects0*theta) )*sigma2)/(2*theta); model zwfl1 ~ normal(mean,var);
+predict mean out=meanOU103; run;
+/** LINEAR REGRESSION */
+ proc nlmixed data=child;
+parms sigma2=10 a1=1.0 a2=1.0; mean = a1+a2*agects1; var=sigma2;
+model zwfl1 ~ normal(mean,var); predict mean out=meanLM103;
+run;
+ 
+ proc export data=work.meanOU103 outfile='/folders/myfolders/OUfitschild103.csv' dbms=csv
+replace;
+run;
+ proc export data=work.meanLM103 outfile='/folders/myfolders/LMfitschild103.csv' dbms=csv
+replace;
+run;
+/** child id=2 **/
+ data child; set TZ;
+if subjidN=2; run;
+/** OU */
+ proc nlmixed data=child;
+parms sigma2=5 theta=8 mu=0.2;
+mean = exp((-agects1+agects0)*theta)*(zwfl0-mu) + mu;
+var=(exp(-2*agects1*theta)*( exp(2*agects1*theta) -exp(2*agects0*theta) )*sigma2)/(2*theta); model zwfl1 ~ normal(mean,var);
+predict mean out=meanOU2; run;
+/** LINEAR REGRESSION */
+ proc nlmixed data=child;
+parms sigma2=10 a1=1.0 a2=1.0; mean = a1+a2*agects1; var=sigma2;
+model zwfl1 ~ normal(mean,var); predict mean out=meanLM2;
+run;
+ proc export data=work.meanOU2 outfile='/folders/myfolders/OUfitschild2.csv' dbms=csv
+replace;
+run;
+ proc export data=work.meanLM2 outfile='/folders/myfolders/LMfitschild2.csv' dbms=csv
+replace;
+run;
+/** child id=100 **/
+ data child;
+set TZ;
+if subjidN=100; run;
+/** OU */
+ proc nlmixed data=child;
+parms sigma2=5 theta=8 mu=0.2;
+mean = exp((-agects1+agects0)*theta)*(zwfl0-mu) + mu;
+var=(exp(-2*agects1*theta)*( exp(2*agects1*theta) -exp(2*agects0*theta) )*sigma2)/(2*theta); model zwfl1 ~ normal(mean,var);
+predict mean out=meanOU100; run;
+/** LINEAR REGRESSION */
+ proc nlmixed data=child;
+parms sigma2=10 a1=1.0 a2=1.0; mean = a1+a2*agects1; var=sigma2;
+model zwfl1 ~ normal(mean,var); predict mean out=meanLM100;
+run;
+ proc export data=work.meanOU100 outfile='/folders/myfolders/OUfitschild100.csv' dbms=csv
+replace;
+ 
+ run;
+ proc export data=work.meanLM100 outfile='/folders/myfolders/LMfitschild100.csv' dbms=csv
+replace;
+run;
+ods html5 close;
+ 

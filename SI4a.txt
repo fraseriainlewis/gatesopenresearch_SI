@@ -1,0 +1,306 @@
+ /** fit best SDE with different inits **/
+libname SAScode '/folders/myfolders/';
+filename reffile '/folders/myfolders/SATZcovars.csv';
+filename reffile2 '/folders/myfolders/SATZallchildrenSAS.csv'; /*filename reffile2 '/folders/myfolders/SATZtraj.csv';*/
+ proc import datafile=reffile dbms=csv out=SAScode.covars replace; datarow=2;
+getnames=YES;
+guessingrows=MAX;
+run;
+ proc import datafile=reffile2 dbms=csv out=SAScode.traj replace; datarow=2;
+getnames=YES;
+guessingrows=MAX;
+run;
+ data traj;
+set SAScode.traj;
+intercept=1;/** intercept for all patients **/ if country='TZ' then country2=1;
+else country2=0;
+agects12=agects1**2;
+agects13=agects1**3;
+agects14=agects1**4;
+agects15=agects1**5;
+run;
+ data covars;
+set SAScode.covars;
+if diarrhea_prop^=.;
+if household_income^=.;
+keep pid month_ss diarrhea_prop household_income; run;
+ proc stdize data=covars out=covars; var household_income;
+run;
+ proc sql;
+create table combined as select distinct a.*,b.diarrhea_prop, b.household_income from traj a, covars b
+where a.subjid=b.pid and a.agemnth0=b.month_ss; quit;
+ proc sort data=combined out=combined; by subjidN agemnth0;
+run;
+ proc export data=work.combined outfile="/folders/myfolders/combined.csv" dbms=csv
+replace;
+run;
+ods html5 file='/folders/myfolders/SI3output.html';
+/*********************************************************/
+/** SDE Models general form **/ /********************************************************************************/ /* $ dX_t = a2 + a3 t + a4 t^2 + a5 t^3 + a1 x, sigma dW_t $
+/******** COUNTRY ************************************************************************/
+title 'SDE linear in t all params';
+ proc nlmixed data=combined;/** AIC=22140 BIC=22189 **/ /** the best set! */
+parms sigma2a_ind=16 sigma2b_ind=4
+a1a_ind=-5 a1b_ind=-3 a2a_ind=5 a2b_ind=5 a3a_ind=-5 a3b_ind=-5 /*s2b1=2 s2b2=2 s2b3=1 s2b4=1*/;
+a1=a1a_ind*intercept+a1b_ind*country2+b1; a2=a2a_ind*intercept+a2b_ind*country2+b2;
+ 
+a3=a3a_ind*intercept+a3b_ind*country2+b3;
+a4=0;
+a5=0; sigma2=sigma2a_ind*intercept+sigma2b_ind*country2+b4;
+      /** condition mean with RVs for likelihood*/
+var = ((-1.0+exp(2*a1*(agects1-agects0)))*sigma2)/(2*a1);
+mean=(1/(a1**4))*exp(-a1*agects0)*(6*a5*(exp(a1*agects1) - exp(a1*agects0)) + 2*a1*(a4*exp(a1*agects1) - a4*exp(a1*agects0) - 3*a5*exp(a1*agects0)*agects1 +
+3*a5*exp(a1*agects1)*agects0) +
+a1**2*(a3*(exp(a1*agects1) - exp(a1*agects0)) - 2*a4*exp(a1*agects0)*agects1 -
+3*a5*exp(a1*agects0)*agects1**2 + 2*a4*exp(a1*agects1)*agects0 + 3*a5*exp(a1*agects1)*agects0**2) + a1**3*(a2*(exp(a1*agects1) - exp(a1*agects0)) - a3*exp(a1*agects0)*agects1 -
+a4*exp(a1*agects0)*agects1**2 - a5*exp(a1*agects0)*agects1**3 + a3*exp(a1*agects1)*agects0 + a4*exp(a1*agects1)*agects0**2 + a5*exp(a1*agects1)*agects0**3) + a1**4*exp(a1*agects1)*zwfl0);
+model zwfl1 ~ normal(mean,var);
+random b1 b2 b3 b4 ~ normal([0,0,0,0],
+[s2b1,
+0,s2b2,
+0,0,s2b3,
+0,0,0,s2b4]) subject=subjidN;
+run;
+title 'SDE linear in t reduced - combined a2 a3 across country';
+ proc nlmixed data=combined;/** AIC=22165 BIC=22206 **/ /** the best set! */
+parms sigma2a_ind=16 sigma2b_ind=4
+a1a_ind=-5 a1b_ind=-3 a2_ind=5 a3_ind=-5 /*s2b1=2 s2b2=2 s2b3=1 s2b4=1*/;
+a1=a1a_ind*intercept+a1b_ind*country2+b1; a2=a2_ind+b2;
+a3=a3_ind+b3;
+a4=0;
+a5=0; sigma2=sigma2a_ind*intercept+sigma2b_ind*country2+b4;
+      /** condition mean with RVs for likelihood*/
+var = ((-1.0+exp(2*a1*(agects1-agects0)))*sigma2)/(2*a1);
+mean=(1/(a1**4))*exp(-a1*agects0)*(6*a5*(exp(a1*agects1) - exp(a1*agects0)) + 2*a1*(a4*exp(a1*agects1) - a4*exp(a1*agects0) - 3*a5*exp(a1*agects0)*agects1 +
+3*a5*exp(a1*agects1)*agects0) +
+a1**2*(a3*(exp(a1*agects1) - exp(a1*agects0)) - 2*a4*exp(a1*agects0)*agects1 -
+3*a5*exp(a1*agects0)*agects1**2 + 2*a4*exp(a1*agects1)*agects0 + 3*a5*exp(a1*agects1)*agects0**2) + a1**3*(a2*(exp(a1*agects1) - exp(a1*agects0)) - a3*exp(a1*agects0)*agects1 -
+a4*exp(a1*agects0)*agects1**2 - a5*exp(a1*agects0)*agects1**3 + a3*exp(a1*agects1)*agects0 + a4*exp(a1*agects1)*agects0**2 + a5*exp(a1*agects1)*agects0**3) + a1**4*exp(a1*agects1)*zwfl0);
+model zwfl1 ~ normal(mean,var);
+random b1 b2 b3 b4 ~ normal([0,0,0,0],
+[s2b1,
+0,s2b2,
+0,0,s2b3,
+0,0,0,s2b4]) subject=subjidN;
+run;
+title 'SDE quadratic in t all params';
+ proc nlmixed data=combined;/** AIC=21803 BIC=21861 **/ /** the best set! */
+parms sigma2a_ind=17 sigma2b_ind=5
+a1a_ind=-5 a1b_ind=-5 a2a_ind=5 a2b_ind=5 a3a_ind=-20 a3b_ind=-20
+ 
+a4a_ind=20 a4b_ind=1 s2b1=20 s2b2=2
+s2b3=1
+s2b4=1 /*s2b5=0.1*/;
+a1=a1a_ind*intercept+a1b_ind*country2+b1; a2=a2a_ind*intercept+a2b_ind*country2+b2; a3=a3a_ind*intercept+a3b_ind*country2+b3; a4=a4a_ind*intercept+a4b_ind*country2;
+a5=0; sigma2=sigma2a_ind*intercept+sigma2b_ind*country2+b4;
+      /** condition mean with RVs for likelihood*/
+var = ((-1.0+exp(2*a1*(agects1-agects0)))*sigma2)/(2*a1);
+mean=(1/(a1**4))*exp(-a1*agects0)*(6*a5*(exp(a1*agects1) - exp(a1*agects0)) + 2*a1*(a4*exp(a1*agects1) - a4*exp(a1*agects0) - 3*a5*exp(a1*agects0)*agects1 +
+3*a5*exp(a1*agects1)*agects0) +
+a1**2*(a3*(exp(a1*agects1) - exp(a1*agects0)) - 2*a4*exp(a1*agects0)*agects1 -
+3*a5*exp(a1*agects0)*agects1**2 + 2*a4*exp(a1*agects1)*agects0 + 3*a5*exp(a1*agects1)*agects0**2) + a1**3*(a2*(exp(a1*agects1) - exp(a1*agects0)) - a3*exp(a1*agects0)*agects1 -
+a4*exp(a1*agects0)*agects1**2 - a5*exp(a1*agects0)*agects1**3 + a3*exp(a1*agects1)*agects0 + a4*exp(a1*agects1)*agects0**2 + a5*exp(a1*agects1)*agects0**3) + a1**4*exp(a1*agects1)*zwfl0);
+model zwfl1 ~ normal(mean,var);
+random b1 b2 b3 b4 ~ normal([0,0,0,0],
+[s2b1,
+0,s2b2,
+0,0,s2b3,
+0,0,0,s2b4]) subject=subjidN;
+run;
+title 'SDE quadratic in t reduced combined a2 a3 across country';
+ proc nlmixed data=combined;/** AIC=21800 BIC=21850 **/ /** the best set! */
+parms sigma2a_ind=17 sigma2b_ind=5
+a1a_ind=-5 a1b_ind=-5 a2_ind=5 a3_ind=-20 a4a_ind=20 a4b_ind=1 s2b1=20 s2b2=2
+s2b3=1
+s2b4=1 /*s2b5=0.1*/;
+a1=a1a_ind*intercept+a1b_ind*country2+b1; a2=a2_ind+b2;
+a3=a3_ind+b3;
+a4=a4a_ind*intercept+a4b_ind*country2;
+a5=0; sigma2=sigma2a_ind*intercept+sigma2b_ind*country2+b4;
+      /** condition mean with RVs for likelihood*/
+var = ((-1.0+exp(2*a1*(agects1-agects0)))*sigma2)/(2*a1);
+mean=(1/(a1**4))*exp(-a1*agects0)*(6*a5*(exp(a1*agects1) - exp(a1*agects0)) + 2*a1*(a4*exp(a1*agects1) - a4*exp(a1*agects0) - 3*a5*exp(a1*agects0)*agects1 +
+3*a5*exp(a1*agects1)*agects0) +
+a1**2*(a3*(exp(a1*agects1) - exp(a1*agects0)) - 2*a4*exp(a1*agects0)*agects1 -
+3*a5*exp(a1*agects0)*agects1**2 + 2*a4*exp(a1*agects1)*agects0 + 3*a5*exp(a1*agects1)*agects0**2) + a1**3*(a2*(exp(a1*agects1) - exp(a1*agects0)) - a3*exp(a1*agects0)*agects1 -
+a4*exp(a1*agects0)*agects1**2 - a5*exp(a1*agects0)*agects1**3 + a3*exp(a1*agects1)*agects0 + a4*exp(a1*agects1)*agects0**2 + a5*exp(a1*agects1)*agects0**3) + a1**4*exp(a1*agects1)*zwfl0);
+model zwfl1 ~ normal(mean,var);
+random b1 b2 b3 b4 ~ normal([0,0,0,0],
+[s2b1,
+0,s2b2,
+0,0,s2b3,
+0,0,0,s2b4]) subject=subjidN;
+run;
+ 
+title 'SDE cubic most params - not a5a a5b so converges';
+ proc nlmixed data=combined;/** AIC=21722 BIC=21784 **/
+/*parms sigma2a_ind=15 a1a_ind=-5 a1b_ind=-5 a2_ind=5 a3a_ind=-20 a4a_ind=20
+s2b1=20 s2b2=2 s2b5=0.1;*/ /** the best set! */
+parms sigma2a_ind=17 sigma2b_ind=5
+a1a_ind=-5 a1b_ind=-5 a2a_ind=5 a2b_ind=5 a3a_ind=-20 a3b_ind=-20 a4a_ind=20 a4b_ind=1 a5_ind=1 s2b1=20 s2b2=2
+s2b3=1
+s2b4=1 /*s2b5=0.1*/;
+a1=a1a_ind*intercept+a1b_ind*country2+b1; a2=a2a_ind*intercept+a2b_ind*country2+b2; a3=a3a_ind*intercept+a3b_ind*country2+b3; a4=a4a_ind*intercept+a4b_ind*country2;
+a5=a5_ind; sigma2=sigma2a_ind*intercept+sigma2b_ind*country2+b4;
+      /** condition mean with RVs for likelihood*/
+var = ((-1.0+exp(2*a1*(agects1-agects0)))*sigma2)/(2*a1);
+mean=(1/(a1**4))*exp(-a1*agects0)*(6*a5*(exp(a1*agects1) - exp(a1*agects0)) + 2*a1*(a4*exp(a1*agects1) - a4*exp(a1*agects0) - 3*a5*exp(a1*agects0)*agects1 +
+3*a5*exp(a1*agects1)*agects0) +
+a1**2*(a3*(exp(a1*agects1) - exp(a1*agects0)) - 2*a4*exp(a1*agects0)*agects1 -
+3*a5*exp(a1*agects0)*agects1**2 + 2*a4*exp(a1*agects1)*agects0 + 3*a5*exp(a1*agects1)*agects0**2) + a1**3*(a2*(exp(a1*agects1) - exp(a1*agects0)) - a3*exp(a1*agects0)*agects1 -
+a4*exp(a1*agects0)*agects1**2 - a5*exp(a1*agects0)*agects1**3 + a3*exp(a1*agects1)*agects0 + a4*exp(a1*agects1)*agects0**2 + a5*exp(a1*agects1)*agects0**3) + a1**4*exp(a1*agects1)*zwfl0);
+model zwfl1 ~ normal(mean,var);
+random b1 b2 b3 b4 ~ normal([0,0,0,0],
+run;
+title 'SDE cubic reduced';
+[s2b1,
+0,s2b2,
+0,0,s2b3,
+0,0,0,s2b4]) subject=subjidN;
+ proc nlmixed data=combined;/** AIC=21718 BIC=21772 **/
+/*parms sigma2a_ind=15 a1a_ind=-5 a1b_ind=-5 a2_ind=5 a3a_ind=-20 a4a_ind=20
+s2b1=20 s2b2=2 s2b5=0.1;*/ /** the best set! */
+parms sigma2a_ind=17 sigma2b_ind=5
+a1a_ind=-5 a1b_ind=-5 a2_ind=5 a3_ind=-20 a4a_ind=20 a4b_ind=1 a5_ind=1 s2b1=20 s2b2=2
+s2b3=1
+s2b4=1 /*s2b5=0.1*/;
+a1=a1a_ind*intercept+a1b_ind*country2+b1; a2=a2_ind+b2;
+a3=a3_ind+b3;
+a4=a4a_ind*intercept+a4b_ind*country2;
+a5=a5_ind; sigma2=sigma2a_ind*intercept+sigma2b_ind*country2+b4;
+      /** condition mean with RVs for likelihood*/
+var = ((-1.0+exp(2*a1*(agects1-agects0)))*sigma2)/(2*a1);
+ 
+mean=(1/(a1**4))*exp(-a1*agects0)*(6*a5*(exp(a1*agects1) - exp(a1*agects0)) + 2*a1*(a4*exp(a1*agects1) - a4*exp(a1*agects0) - 3*a5*exp(a1*agects0)*agects1 +
+3*a5*exp(a1*agects1)*agects0) +
+a1**2*(a3*(exp(a1*agects1) - exp(a1*agects0)) - 2*a4*exp(a1*agects0)*agects1 -
+3*a5*exp(a1*agects0)*agects1**2 + 2*a4*exp(a1*agects1)*agects0 + 3*a5*exp(a1*agects1)*agects0**2) + a1**3*(a2*(exp(a1*agects1) - exp(a1*agects0)) - a3*exp(a1*agects0)*agects1 -
+a4*exp(a1*agects0)*agects1**2 - a5*exp(a1*agects0)*agects1**3 + a3*exp(a1*agects1)*agects0 + a4*exp(a1*agects1)*agects0**2 + a5*exp(a1*agects1)*agects0**3) + a1**4*exp(a1*agects1)*zwfl0);
+model zwfl1 ~ normal(mean,var);
+random b1 b2 b3 b4 ~ normal([0,0,0,0],
+[s2b1,
+0,s2b2,
+0,0,s2b3,
+0,0,0,s2b4]) subject=subjidN out=rvs;
+predict mean out=PredCondCu;/** conditional residuals **/ ods output ParameterEstimates=params;
+run;
+/*filename outfile "&_SASWS_/Users/lewisfa/R/predcondCu30Jan.csv"; filename outfile2 "&_SASWS_/Users/lewisfa/R/rvs30Jan.csv"; filename outfile3 "&_SASWS_/Users/lewisfa/R/params30Jan.csv"; */
+filename outfile "/folders/myfolders/predcondSDE.csv"; filename outfile2 "/folders/myfolders/rvsSDE.csv"; filename outfile3 "/folders/myfolders/paramsSDE.csv";
+ proc export data=work.PredCondCu outfile=outfile
+dbms=csv
+replace;
+run;
+ proc export data=work.rvs outfile=outfile2 dbms=csv
+replace;
+run;
+ proc export data=work.params outfile=outfile3
+dbms=csv
+replace;
+run; /***********************************************************************/
+/***********************************************************************/
+/*** CURVE FITTING COMPARISONS *****************************************/
+/***********************************************************************/
+/** BEST MODEL AT THE END */
+/******************************************/
+/**** CURVE FITTING MODELS *************/
+title 'linear lmm + country fixed - no R-side';
+ proc mixed data=combined method=ml ic;/** AIC=22709.2 BIC=22750.5 **/ class country;
+model zwfl1 = agects1 country / s;
+random intercept agects1 agects12/ type=un sub=subjidN g;
+run;
+title 'linear lmm + country fixed - R-side AR(1)';
+ proc mixed data=combined method=ml ic;/** AIC=22172.7 BIC=22218.1 **/ class country;
+model zwfl1 = agects1 country / s;
+random intercept agects1 agects12/ type=un sub=subjidN g;
+repeated / type=ar(1) sub=subjidN r; run;
+title 'quad lmm + country fixed';
+ proc mixed data=combined method=ml ic;/** AIC=22058.2 BIC=22107.7 **/ class country;
+model zwfl1 = agects1 agects12 country / s;
+random intercept agects1 agects12/ type=un sub=subjidN g;
+repeated / type=ar(1) sub=subjidN r; run;
+title 'cubic lmm + country fixed';
+ proc mixed data=combined method=ml ic;/** AIC=21936.1 BIC=22006.4 **/ class country;
+model zwfl1 = agects1 agects12 agects13 country / s;
+random intercept agects1 agects12 agects13/ type=un sub=subjidN g; repeated / type=ar(1) sub=subjidN r;
+ 
+run;
+title 'quartic lmm + country';
+/** linear agects1 no longer significant at 0.05 and quadratic agects12 is only 0.01 */
+ proc mixed data=combined method=ml ic;/** AIC=21818.2 BIC=21913.2 **/
+class country;
+model zwfl1 = agects1 agects12 agects13 agects14 country / s;
+random intercept agects1 agects12 agects13 agects14/ type=un sub=subjidN g; repeated / type=ar(1) sub=subjidN r;
+run;
+title 'quartic lmm + country - reduced - no linear agects1 as not sig. in full model'; /** AIC/BIC much worse dropping linear so move back cubic skeleton to keep only
+stat sig terms and now consider with interactions
+Also G-matrix not positive definite so model seems to be misbehaving */
+ proc mixed data=combined method=ml ic;/** AIC=21984.6 BIC=22054.8 **/ class country;
+model zwfl1 = agects12 agects13 agects14 country / s;
+random intercept agects12 agects13 agects14/ type=un sub=subjidN g; repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country*agects all terms';
+ proc mixed data=combined method=ml ic;/** AIC=21918.5 BIC=22001.1 **/
+class country;
+model zwfl1 = agects1 agects12 agects13 country country*agects1 country*agects12 country*agects13 / s; random intercept agects1 agects12 agects13/ type=un sub=subjidN g;
+repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country + country*agects1';
+ proc mixed data=combined method=ml ic;/** AIC=21918.6 BIC=21993.0 **/ class country;
+model zwfl1 = agects1 agects12 agects13 country country*agects1 / s; random intercept agects1 agects12 agects13/ type=un sub=subjidN g; repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country + country*agects12';
+ proc mixed data=combined method=ml ic;/** AIC=21915.1 BIC=21989.5 **/ class country;
+model zwfl1 = agects1 agects12 agects13 country country*agects12 / s; random intercept agects1 agects12 agects13/ type=un sub=subjidN g; repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country + country*agects13';
+ proc mixed data=combined method=ml ic;/** AIC=21915.1 BIC=21989.4 **/ class country;
+model zwfl1 = agects1 agects12 agects13 country country*agects13 / s; random intercept agects1 agects12 agects13/ type=un sub=subjidN g; repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country + country*agects1+country*agects12';
+ proc mixed data=combined method=ml ic;/** AIC=21916.6 BIC=21995.1 **/
+class country;
+model zwfl1 = agects1 agects12 agects13 country country*agects1 country*agects12 / s; random intercept agects1 agects12 agects13/ type=un sub=subjidN g;
+repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country + country*agects1+country*agects13';
+ proc mixed data=combined method=ml ic;/** AIC=21917.0 BIC=21995.5 **/
+class country;
+model zwfl1 = agects1 agects12 agects13 country country*agects1 country*agects13 / s; random intercept agects1 agects12 agects13/ type=un sub=subjidN g;
+repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country + country*agects12+country*agects13';
+ proc mixed data=combined method=ml ic;/** AIC=21916.9 BIC=21995.4 **/
+class country;
+model zwfl1 = agects1 agects12 agects13 country country*agects12 country*agects13 / s; random intercept agects1 agects12 agects13/ type=un sub=subjidN g;
+repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country*agects1';
+ 
+  proc mixed data=combined method=ml ic;/** AIC=21916.7 BIC=21986.9 **/
+class country;
+model zwfl1 = agects1 agects12 agects13 country*agects1 / s outp=curvepredcond outpm=curvepredmarg; random intercept agects1 agects12 agects13/ type=un sub=subjidN g;
+repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country*agects13';
+ proc mixed data=combined method=ml ic;/** AIC=21913.6 BIC=21983.5 **/
+class country;
+model zwfl1 = agects1 agects12 agects13 country*agects13 / s outp=curvepredcond outpm=curvepredmarg; random intercept agects1 agects12 agects13/ type=un sub=subjidN g;
+repeated / type=ar(1) sub=subjidN r;
+run;
+title 'cubic lmm + country*agects12'; /** BEST CURVE **/
+ proc mixed data=combined method=ml ic;/** AIC=21913.2 BIC=21983.5 **/
+class country;
+model zwfl1 = agects1 agects12 agects13 country*agects12 / s outp=curvepredcond outpm=curvepredmarg; random intercept agects1 agects12 agects13/ type=un sub=subjidN g;
+repeated / type=ar(1) sub=subjidN r;
+run;
+filename outfile "/folders/myfolders/curvepredcond.csv"; /*filename outfile2 "/folders/myfolders/curvepredmarg.csv"; */
+ proc export data=work.curvepredcond outfile=outfile
+dbms=csv
+replace;
+run;
+/*proc export data=work.curvepredmarg outfile=outfile2
+dbms=csv
+replace;
+run; */
+ods html5 close;
+ 

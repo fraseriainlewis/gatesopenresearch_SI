@@ -1,0 +1,340 @@
+if(Sys.info()["user"]!="fraser"){setwd("~/Desktop/streamcontourplot/plots/"); } else {setwd("/Users/fraser/myrepos/sdegrowth/R");}
+rm(list=ls()); library("data.table") library("ggplot2") library("gridExtra")
+# -----------------------------------------------------------------------
+# ----------------------- FIGURE 1 --------------------------------------
+# ----------------------------------------------------------------------- if(Sys.info()["user"]!="fraser"){setwd("~/Desktop/streamcontourplot/plots/"); } else {setwd("/Users/fraser/myrepos/sdegrowth/R");}
+load("TZtraj.RData");# provides TZtraj list load("TZchild24.RData");# provides TZchild24.df load("SAtraj.RData");# provides SAtraj list load("SAchild24.RData");# provides SAchild24.df
+if(Sys.info()["user"]!="fraser"){setwd("~/Desktop/streamcontourplot/plots");
+} else {setwd("/Users/fraser/myrepos/sdegrowth/SASUniversityEdition/myfolders");}
+fittedSDE.df<-read.csv("predcondSDE.csv",header=TRUE); # fitted values with 95% CI SDE preds <- as.data.table(fittedSDE.df)
+preds[, resid:= zwfl1 - Pred]
+preds[, error:= sum(resid^2), by=subjidN]
+fig1<-ggplot(data=preds, aes(x=agemnth1, y=zwfl1))+ geom_line( aes(group=subjid), size=0.2, alpha=0.1)+ geom_smooth(colour="black",size=0.9) + coord_cartesian(ylim = c(-2, 3)) +
+#
+geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="TZ"])[9]], size=0.7, colour="gold1")+ geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="TZ"])[103]], size=0.7,
+colour="darkorchid2")+ geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="TZ"])[1]], size=0.7,
+colour="springgreen4")+ #
+geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="SA"])[103]], size=0.7, colour="royalblue1")+
+geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="SA"])[102]], size=0.7, colour="tan1")+
+geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="SA"])[10]], size=0.7, colour="deeppink3")+
+#
+scale_x_continuous(breaks=seq(0,24,by=6))+
+facet_wrap(~country, labeller=as_labeller(c("SA"=paste0("Venda, South Africa"," (n=",length(SAtraj),")"),
+"TZ"=paste0("Haydom, Tanzania"," (n=",length(TZtraj),")")))) + labs(x="Age (Months)", y="Weight-for-Length z-score (ZWfL)")
+print(fig1)
+ggsave("Figure1ggplot.png", fig1, height=4, width = 6)
+fig1bw<-ggplot(data=preds, aes(x=agemnth1, y=zwfl1))+
+geom_line( aes(group=subjid), size=0.2, alpha=0.1)+
+geom_smooth(colour="black",size=0.3,se=F) +
+#
+geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="TZ"])[9]], size=0.7, colour="grey60")+ geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="TZ"])[103]], size=0.7, colour="grey45")+ geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="TZ"])[1]], size=0.7, colour="grey30")+
+#
+geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="SA"])[103]], size=0.7, colour="grey60")+ geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="SA"])[102]], size=0.7, colour="grey45")+ geom_line(data=preds[preds$subjid==unique(preds$subjid[preds$country=="SA"])[10]], size=0.7, colour="grey30")+ #
+scale_x_continuous(breaks=seq(0,24,by=6))+
+facet_wrap(~country, labeller=as_labeller(c("SA"=paste0("Venda, South Africa"," (n=",length(SAtraj),")"),
+"TZ"=paste0("Haydom, Tanzania"," (n=",length(TZtraj),")")))) +
+theme_classic() +
+labs(x="Age (Months)", y="Weight-for-Length z-score (ZWfL)") print(fig1bw)
+ggsave("Figure1ggplot_BW.png", fig1bw, height=4, width = 6)
+# ----------------------------------------------------------------------- # ----------------------- FIGURE 2 -------------------------------------- # ----------------------------------------------------------------------- ou.c9<-read.csv("OUfitschild9.csv",header=TRUE); ou.c103<-read.csv("OUfitschild103.csv",header=TRUE); ou.c2<-read.csv("OUfitschild2.csv",header=TRUE); ou.c100<-read.csv("OUfitschild100.csv",header=TRUE);
+theme_classic() +
+
+lm.c9<-read.csv("LMfitschild9.csv",header=TRUE); lm.c103<-read.csv("LMfitschild103.csv",header=TRUE); lm.c2<-read.csv("LMfitschild2.csv",header=TRUE); lm.c100<-read.csv("LMfitschild100.csv",header=TRUE);
+dat.df<-read.csv("combined.csv",header=TRUE);## observed data - as used to fit models dat <- as.data.table(dat.df)
+fits <- merge(
+subset(rbind(ou.c9,ou.c103,ou.c100), select=c("subjid","agects1","Pred")), subset(rbind(lm.c9,lm.c103,lm.c100), select=c("subjid","agects1","Pred")), by=c("subjid","agects1"),suffixes = c(".ou",".lm"))
+dat.fit <- merge(dat.df, fits, by=c("subjid","agects1"), all.y=T) dat.melt <- melt(dat.fit, id.vars=c("subjid","country","agects1"),
+measure.vars = c("Pred.ou","Pred.lm","zwfl0"))
+## different patients
+idx <- unique(dat$subjid)[c(47, 106, 174, 233, 369, 305)]
+fig2<-ggplot(data=dat.melt, aes(x=agects1*24, y=value, colour=variable, size=variable))+
+geom_line()+ geom_text(data=data.frame(subjid=unique(dat.melt$subjid),
+label=c("(i)","(ii)","(iii)")),
+inherit.aes = F,
+aes(x=3,y=3.1,label=label))+ facet_wrap(~subjid) +
+theme_classic()+ scale_x_continuous(breaks=seq(0,24,by=6))+ theme(legend.position = c(0.9,0.88),
+strip.background = element_blank(),
+strip.text.x = element_blank())+ guides(size="none")+
+scale_size_manual(values=c("zwfl0"=0.2, "Pred.ou"=0.7,
+"Pred.lm"=0.7))+ scale_colour_manual(name="Model",
+values=c("zwfl0"="grey20", "Pred.ou"="dodgerblue3",
+"Pred.lm"="firebrick3"), labels=c("zwfl0"="Observed",
+"Pred.ou"="Ornstein-\nUhlenbeck",
+"Pred.lm"="Linear\nregression"))+ labs(x="Age (Months)", y="Weight-for-Length z-score (ZWfL)")
+print(fig2);
+ggsave("Figure2ggplot.png", fig2, height=4, width = 6)
+fig2bw <- fig2+scale_colour_grey() ggsave("Figure2ggplot_BW.png", fig2bw, height=4, width = 6)
+# -----------------------------------------------------------------------
+# ----------------------- FIGURE 3 -------------------------------------
+# ----------------------------------------------------------------------- if(Sys.info()["user"]!="fraser"){setwd("~/Desktop/streamcontourplot/plots/");
+} else {setwd("/Users/fraser/myrepos/sdegrowth/SASUniversityEdition/myfolders");}
+## Read data
+curve <- fread('curvepredcond.csv') sde <- fread('predcondSDE.csv')
+D <- merge(
+subset(curve, select=c("subjid","agemnth0","zwfl0","zwfl1","Pred","Lower","Upper")), subset(sde, select=c("subjid","agemnth0","zwfl0","zwfl1","Pred","Lower","Upper")), by=c("subjid","agemnth0","zwfl0","zwfl1"),
+suffixes=c(".c",".s"))
+D[, country:= substr(subjid,1,2)]
+## Calculate residuals from each model D[, Resid.c:= zwfl1 - Pred.c]
+D[, Resid.s:= zwfl1 - Pred.s]
+D[, change:= zwfl0 - zwfl1]
+Z <- D[, lapply(.SD, mean), by=c("country", "agemnth0"), .SDcols=c("zwfl1", "Pred.c", "Pred.s")]
+Z <- melt(Z, id.vars=c("country","agemnth0"), measure.vars = c("zwfl1", "Pred.c", "Pred.s"))
+Z$variable <- factor(Z$variable, levels=c("zwfl1", "Pred.c", "Pred.s"), labels=c("Observed","LMM", "SDE"))
+Z$size <- ifelse(Z$variable=="Observed",0.2,0.7)
+W <- D[, lapply(.SD, mean), by=c("country", "agemnth0"), .SDcols=c("zwfl1", "Pred.c", "Lower.c", "Upper.c",
+"Pred.s","Lower.s","Upper.s")]
+
+Wb <- W
+W <- melt(W, id.vars=c("country","agemnth0"),
+measure.vars = c("zwfl1", "Pred.c", "Lower.c", "Upper.c", "Pred.s","Lower.s","Upper.s"))
+W$variable <- factor(W$variable,
+levels=c("zwfl1", "Pred.c", "Pred.s", "Lower.c", "Upper.c", "Lower.s","Upper.s"),
+labels=c("Observed","LMM", "SDE", "Lower.c", "Upper.c", "Lower.s","Upper.s")) W$size <- ifelse(W$variable=="Observed",0.2,0.7)
+fig3<-ggplot(data=W[variable%in%c("Observed","LMM", "SDE")], aes(x=agemnth0, y=value, colour=variable, linetype=variable))+
+geom_ribbon(data=Wb, inherit.aes=F, aes(x=agemnth0, ymin=Lower.c, ymax=Upper.c), alpha=0.3, fill="firebrick3")+
+geom_ribbon(data=Wb, inherit.aes=F, aes(x=agemnth0, ymin=Lower.s, ymax=Upper.s), alpha=0.4, fill="dodgerblue3")+
+geom_line(aes(size=size))+
+scale_size(range=c(0.4,1))+
+scale_x_continuous(breaks=seq(0,24,by=6))+ scale_colour_manual(values=c("Observed"="grey20","SDE"="dodgerblue3", "LMM"="firebrick3"))+ facet_wrap(~country, labeller=as_labeller(c("SA"="Venda, South Africa",
+"TZ"="Haydom, Tanzania")))+ theme_classic()+theme(legend.position = c(0.85,0.65))+guides(size="none")+
+labs(x="Age (months)", y="Weight-for-Length z-score (ZWfL)", colour="Model", linetype="Model") print(fig3);
+ggsave("Figure3ggplot.png", fig3, height=4, width = 6)
+fig3bw<-ggplot(data=W[variable%in%c("Observed","LMM", "SDE")], aes(x=agemnth0, y=value, colour=variable, linetype=variable))+
+geom_ribbon(data=Wb, inherit.aes=F, aes(x=agemnth0, ymin=Lower.c, ymax=Upper.c), alpha=0.3, fill="grey70")+ geom_ribbon(data=Wb, inherit.aes=F, aes(x=agemnth0, ymin=Lower.s, ymax=Upper.s), alpha=0.4, fill="grey50")+ geom_line(aes(size=size))+
+scale_size(range=c(0.4,1))+
+scale_x_continuous(breaks=seq(0,24,by=6))+ scale_colour_manual(values=c("Observed"="grey20","SDE"="grey50", "LMM"="grey90"))+ facet_wrap(~country, labeller=as_labeller(c("SA"="Venda, South Africa",
+"TZ"="Haydom, Tanzania")))+ theme_classic()+theme(legend.position = c(0.85,0.65))+guides(size="none")+
+labs(x="Age (months)", y="Weight-for-Length z-score (ZWfL)", colour="Model", linetype="Model") print(fig3bw);
+ggsave("Figure3ggplot_BW.png", fig3bw, height=4, width = 6)
+# -----------------------------------------------------------------------
+# ----------------------- FIGURE 4 --------------------------------------
+# ----------------------------------------------------------------------- save.image("allplot.RData"); if(Sys.info()["user"]!="fraser"){setwd("~/Desktop/streamcontourplot/plots/");
+} else {setwd("/Users/fraser/myrepos/sdegrowth/SASUniversityEdition/myfolders");}
+rv<-read.csv("rvsSDE.csv",header=TRUE);## random effects per child SDE model fixedPar<-read.csv("paramsSDE.csv",header=TRUE);## fixed effects params SDE model ## create a data.frame with format {subjidN=,b1=,b2,b3,b4,b5}
+rv.wide <- dcast(rv, subjidN ~ Effect, value.var="Estimate")
+### global fixed parameters a1a<-fixedPar$Estimate[fixedPar$Parameter=="a1a_ind"]; a1b<-fixedPar$Estimate[fixedPar$Parameter=="a1b_ind"]; a2<-fixedPar$Estimate[fixedPar$Parameter=="a2_ind"]; a3<-fixedPar$Estimate[fixedPar$Parameter=="a3_ind"]; a4a<-fixedPar$Estimate[fixedPar$Parameter=="a4a_ind"]; a4b<-fixedPar$Estimate[fixedPar$Parameter=="a4b_ind"]; a5<-fixedPar$Estimate[fixedPar$Parameter=="a5_ind"]; sigma2a<-fixedPar$Estimate[fixedPar$Parameter=="sigma2a_ind"]; sigma2b<-fixedPar$Estimate[fixedPar$Parameter=="sigma2b_ind"];
+#--------------------------------- a<-split(dat$agects0,list(dat$subjidN));
+initt0=unlist(lapply(a,min));
+a<-split(dat$zwfl0,list(dat$subjidN));
+initY0=unlist(lapply(a,min)); allinits<-data.frame(subijdN=as.numeric(names(a)),t0=initt0,Y0=initY0); head(allinits);
+dim(allinits); dim(rv.wide); SA.subjidN<-unique(dat$subjidN[which(dat$country=="SA")]); TZ.subjidN<-unique(dat$subjidN[which(dat$country=="TZ")]);
+#---------------------------------
+## for each of the 236 SDEs compute the prediction Y1 at t=0.2 given child is at Y0=-0.5,t0=0.1
+## first part - compute the density value for Y1=-0.5 at t=0.1 given observed starting conditions at t=0.035 ## only work with TZ data
+SAinits<-allinits[SA.subjidN,];## id is same as row number
+SArv<-rv.wide[SA.subjidN,];
+TZinits<-allinits[TZ.subjidN,];## id is same as row number TZrv<-rv.wide[TZ.subjidN,];
+#---------------------------------
+
+sdeMoments<-function(time0,# start time Y0,# start value
+){
+3*a5*exp(a1*time0)*timevec +
+2*a4*exp(a1*time0)*timevec - 3*a5*exp(a1*timevec)*time0**2) + -
+a3*exp(a1*timevec)*time0 + a1**4*exp(a1*timevec)*Y0);
+country2,# country = 0=SA, 1=TZ
+timevec,# time points to evaluate at after time0 a1a.fx,a1b.fx,a2.fx,a3.fx,a4a.fx,a4b.fx,a5.fx, #fixed effect parameters sigma2a.fx,sigma2b.fx, # fixed effect parameters
+b1,b2,b3,b4, # random effect parameters
+Yt=NULL# compute the density value under the current model for Y(timevec|Y0,t0)
+if(!is.null(Yt)){## want to compute density to check only single future time point passed if(length(timevec)!=1){stop("for density value estimation timevec must be single time point")}
+}
+a1=a1a.fx+a1b.fx*country2+b1; a2=a2.fx+b2;
+a3=a3.fx+b3;
+a4=a4a.fx+a4b.fx*country2;
+a5=a5.fx; sigma2=sigma2a.fx+sigma2b.fx*country2+b4;
+loc.mean<-(1/(a1**4))*exp(-a1*time0)*(6*a5*(exp(a1*timevec) - exp(a1*time0)) + 2*a1*(a4*exp(a1*timevec) - a4*exp(a1*time0) -
+3*a5*exp(a1*timevec)*time0) + a1**2*(a3*(exp(a1*timevec) - exp(a1*time0)) -
+3*a5*exp(a1*time0)*timevec**2 + 2*a4*exp(a1*timevec)*time0 + a1**3*(a2*(exp(a1*timevec) - exp(a1*time0)) - a3*exp(a1*time0)*timevec
+a4*exp(a1*time0)*timevec**2 - a5*exp(a1*time0)*timevec**3 + a4*exp(a1*timevec)*time0**2 + a5*exp(a1*timevec)*time0**3) +
+#cat(a1," ",sigma2," ",exp(2*a1*(timevec-time0)),"\n"); loc.sd<-sqrt(((-1.0+exp(2*a1*(timevec-time0)))*sigma2)/(2*a1));
+if(is.null(Yt)){## if Yt is null then compute mean trajectory return(list(Y0=Y0,t0=time0,mean=loc.mean,sd=loc.sd,times=timevec))
+} else {
+# Yt is valid so compute single density value at Y(timevec|Y0,t0) return(list(Y0=Y0,t0=time0,t1=timevec,
+density=dnorm(Yt,mean=loc.mean,sd=loc.sd)));
+} }
+### - MAIN manuscript version - weights are based on likelihood condition on starting point at the earliest possible age of the each child
+##SA
+Y0=-0.5
+t0=0.1 use.these.traj<-sort(which(SAinits$t0<0.1)); timestep=0.01
+nfolds <- 10
+Z <- NULL
+for(start in seq(-4, 2, by=0.5)){
+Q <- NULL
+for(startT in c(0.1,0.2,0.35, 0.5, 0.7, 0.9)){
+P <- NULL
+t0=startT
+P <- data.frame(Y=start,Y1=start,Y2=start,Y3=start,Y4=start,
+Y5=start,Y6=start,Y7=start,Y8=start,
+Y9=start,Y10=start,t=t0, startT=startT, start=start) for(k in seq(1,(1-startT)/timestep)){
+## need to discard small number of trajectories whose start AFTER t1=0.1
+weights <- pred <-NULL;
+for(i in use.these.traj){## for each trajectory - small number dumped as not available before t=0.1
+# if(k==1){ t0i<-SAinits$t0[i]; Y0i<-SAinits$Y0[i]; t0 <- P$t[k]
+Y1 <- P$Y[k]
+t1 <- P$t[k]+timestep # t1i <- P$t[k]
+# } else{
+# t0i <- P$t[k-1]
+# Y0i <- P$Y[k-1]
+# t0i<-SAinits$t0[i];
+# Y0i<-SAinits$Y0[i];
+# t0 <- P$t[k]
+# Y1 <- P$Y[k]
+# t1 <- P$t[k]+timestep #}
+
+b<-sdeMoments(time0=t0i,Y0=Y0i,country2=0,timevec=t0, a1a.fx=a1a,a1b.fx=a1b,a2.fx=a2,a3.fx=a3,a4a.fx=a4a,a4b.fx=a4b,a5.fx=a5, sigma2a.fx=sigma2a,sigma2b.fx=sigma2b, b1=SArv$b1[i],b2=SArv$b2[i],b3=SArv$b3[i],b4=SArv$b4[i], Yt=Y1)$density;#
+weights<-c(weights,b);
+## need to discard small number of trajectories whose start AFTER t1=0.1 - see above b<-sdeMoments(time0=t0,Y0=Y1,country2=0,timevec=t1,
+a1a.fx=a1a,a1b.fx=a1b,a2.fx=a2,a3.fx=a3,a4a.fx=a4a,a4b.fx=a4b,a5.fx=a5, sigma2a.fx=sigma2a,sigma2b.fx=sigma2b, b1=SArv$b1[i],b2=SArv$b2[i],b3=SArv$b3[i],b4=SArv$b4[i], Yt=NULL)$mean;#
+pred<-c(pred,b); }
+## N folds validation
+foldsW <- foldsP <- cut( sample(1:length(weights),length(weights),replace=F),
+breaks=nfolds,labels=FALSE)
+Ybest <- rep(NA,nfolds+1) for(j in 1:nfolds){
+predj <- pred[foldsP==j]
+weightsj <- weights[foldsW==j] Ybest[j]<-predj[which(weightsj==max(weightsj))];
+}
+Ybest[nfolds+1] <-pred[which(weights==max(weights))] P<-rbind( P, data.frame(Y= Ybest[11],
+Y1=Ybest[1],Y2=Ybest[2],Y3=Ybest[3],Y4=Ybest[4], Y5=Ybest[5],Y6=Ybest[6],Y7=Ybest[7],Y8=Ybest[8], Y9=Ybest[9],Y10=Ybest[10],
+t=t1, startT=startT, start=start) )
+}
+Q <- rbind(Q,P) }
+Z <- rbind(Z,Q) }
+SA <- Z
+##TZ
+Y0=-0.5
+t0=0.1 use.these.traj<-sort(which(TZinits$t0<0.1)); timestep=0.01
+nfolds <- 10
+Z <- NULL
+for(start in seq(-4, 2, by=0.5)){
+Q <- NULL
+for(startT in c(0.1,0.2,0.35, 0.5, 0.7, 0.9)){
+P <- NULL
+t0=startT
+P <- data.frame(Y=start,Y1=start,Y2=start,Y3=start,Y4=start,
+Y5=start,Y6=start,Y7=start,Y8=start,
+Y9=start,Y10=start,t=t0, startT=startT, start=start) for(k in seq(1,(1-startT)/timestep)){
+## need to discard small number of trajectories whose start AFTER t1=0.1
+weights <- pred <-NULL;
+for(i in use.these.traj){## for each trajectory - small number dumped as not available before t=0.1
+#if(k==1){ t0i<-TZinits$t0[i]; Y0i<-TZinits$Y0[i]; t0 <- P$t[k]
+Y1 <- P$Y[k]
+t1 <- P$t[k]+timestep # t1i <- P$t[k]
+# } else{
+# t0i <- P$t[k-1]
+# Y0i <- P$Y[k-1] #t0i<-TZinits$t0[i]; #Y0i<-TZinits$Y0[i]; #t0 <- P$t[k]
+#Y1 <- P$Y[k]
+#t1 <- P$t[k]+timestep #}
+b<-sdeMoments(time0=t0i,Y0=Y0i,country2=0,timevec=t0, a1a.fx=a1a,a1b.fx=a1b,a2.fx=a2,a3.fx=a3,a4a.fx=a4a,a4b.fx=a4b,a5.fx=a5, sigma2a.fx=sigma2a,sigma2b.fx=sigma2b, b1=TZrv$b1[i],b2=TZrv$b2[i],b3=TZrv$b3[i],b4=TZrv$b4[i], Yt=Y1)$density;#
+weights<-c(weights,b);
+## need to discard small number of trajectories whose start AFTER t1=0.1 - see above b<-sdeMoments(time0=t0,Y0=Y1,country2=0,timevec=t1,
+
+a1a.fx=a1a,a1b.fx=a1b,a2.fx=a2,a3.fx=a3,a4a.fx=a4a,a4b.fx=a4b,a5.fx=a5, sigma2a.fx=sigma2a,sigma2b.fx=sigma2b, b1=SArv$b1[i],b2=TZrv$b2[i],b3=TZrv$b3[i],b4=TZrv$b4[i], Yt=NULL)$mean;#
+pred<-c(pred,b); }
+## N folds validation
+foldsW <- foldsP <- cut( sample(1:length(weights),length(weights),replace=F),
+breaks=nfolds,labels=FALSE)
+Ybest <- rep(NA,nfolds+1) for(j in 1:nfolds){
+predj <- pred[foldsP==j]
+weightsj <- weights[foldsW==j] Ybest[j]<-predj[which(weightsj==max(weightsj))];
+}
+Ybest[nfolds+1] <-pred[which(weights==max(weights))] P<-rbind( P, data.frame(Y= Ybest[11],
+Y1=Ybest[1],Y2=Ybest[2],Y3=Ybest[3],Y4=Ybest[4], Y5=Ybest[5],Y6=Ybest[6],Y7=Ybest[7],Y8=Ybest[8], Y9=Ybest[9],Y10=Ybest[10],
+t=t1, startT=startT, start=start) )
+}
+Q <- rbind(Q,P) }
+Z <- rbind(Z,Q) }
+TZ <- Z
+Z <- rbind( cbind(SA,site="SA"), cbind(TZ, site="TZ"))
+Z$idx <- interaction(Z$startT,Z$start)
+fig4 <- ggplot(data=Z, aes(x=t*24, y=Y, colour=start, by=idx))+
+geom_line(alpha=0.8, size=0.3)+
+geom_line(aes(y=Y1), alpha=0.2,
+geom_line(aes(y=Y2), alpha=0.2,
+geom_line(aes(y=Y3), alpha=0.2,
+geom_line(aes(y=Y4), alpha=0.2,
+geom_line(aes(y=Y5), alpha=0.2,
+geom_line(aes(y=Y6), alpha=0.2,
+geom_line(aes(y=Y7), alpha=0.2,
+geom_line(aes(y=Y8), alpha=0.2,
+geom_line(aes(y=Y9), alpha=0.2,
+geom_line(aes(y=Y10), alpha=0.2,size=0.1)+
+#geom_path(arrow = arrow(length = unit(0.05, "cm")),alpha=0.1)+ facet_wrap(~site, labeller=as_labeller(c("SA"="Venda, South Africa",
+"TZ"="Haydom, Tanzania")))+
+theme_classic()+
+guides(colour="none")+
+labs(x="Age", y="Weight-for-Length z-score (ZWfL)",colour="Starting\nZWfL")
+print(fig4);
+ggsave("Figure4ggplot_old.png", fig4, height=4, width = 6)
+fig4bw <- fig4+scale_colour_gradient(low="grey90",high="grey10") ggsave("Figure4ggplot_BW_old.png", fig4bw, height=4, width = 6)
+# save.image("plots.Rdata")
+#--------------------------- #---------------------------
+#--------------------------- #---------------------------
+X <- dat[, list(zwfl.0=zwfl0[which.min(agedys0)],zwfl.1=zwfl1[which.max(agedys1)]),by=subjid] X <- melt(X, id.vars = "subjid"); X$site=substr(X$subjid,1,2)
+sa.density <- ggplot(data=X[site=="SA",],
+aes(x=value, fill=variable, linetype=variable))+ geom_density(data=X[site=="SA" & variable=="zwfl.0",], alpha=0.3, size=0.2)+
+geom_line(data=X[site=="SA" & variable=="zwfl.1",], aes(y=..density..), stat="density", alpha=0.8, size=0.3, colour="darkorchid3")+
+# geom_text(data=X[site=="SA",list(value=mean(value),label=ifelse(variable[1]=="zwfl.0","0mo","24mo")),by="variable"],
+# aes(x=value, y=c(0.1,0.3), label=label, colour=variable),alpha=0.8, size=1.2)+ # geom_vline(xintercept=seq(-4,2,by=2),colour="white") +
+scale_fill_manual("Age (mo)",values=c("zwfl.0"="darkorange3","zwfl.1"=NA),
+labels=c("zwfl.0"="0","zwfl.1"="24"))+
+scale_colour_manual("Age (mo)",values=c("zwfl.0"="darkorange3","zwfl.1"="darkorchid3"),
+labels=c("zwfl.0"="0","zwfl.1"="24"))+ scale_linetype_manual("Age (mo)",values=c("zwfl.0"="blank","zwfl.1"="solid"),
+labels=c("zwfl.0"="0","zwfl.1"="24"))+
+size=0.1)+ size=0.1)+ size=0.1)+ size=0.1)+ size=0.1)+ size=0.1)+ size=0.1)+ size=0.1)+ size=0.1)+
+
+coord_flip() + theme_void() + theme(legend.position = c(0.1,0.1),
+legend.title = element_text(size=rel(0.7)), legend.text = element_text(size=rel(0.7)), legend.key.size = unit(0.5,"line"))
+tz.density <- ggplot(data=X[site=="TZ",],
+aes(x=value, fill=variable, linetype=variable))+
+geom_density(data=X[site=="TZ" & variable=="zwfl.0",], alpha=0.3, size=0.2)+ geom_line(data=X[site=="TZ" & variable=="zwfl.1",], aes(y=..density..), stat="density",
+alpha=0.8, size=0.3, colour="darkorchid3")+ geom_text(data=X[site=="SA",list(value=mean(value),label=ifelse(variable[1]=="zwfl.0","0mo","24mo")),by="variable"],
+# aes(x=value, y=c(0.1,0.3), label=label, colour=variable),alpha=0.8, size=1.2)+ # geom_vline(xintercept=seq(-4,2,by=2),colour="white") +
+scale_fill_manual("Age (mo)",values=c("zwfl.0"="darkorange3","zwfl.1"=NA),
+labels=c("zwfl.0"="0","zwfl.1"="24"))+
+scale_colour_manual("Age (mo)",values=c("zwfl.0"="darkorange3","zwfl.1"="darkorchid3"),
+labels=c("zwfl.0"="0","zwfl.1"="24"))+ scale_linetype_manual("Age (mo)",values=c("zwfl.0"="blank","zwfl.1"="solid"),
+labels=c("zwfl.0"="0","zwfl.1"="24"))+ coord_flip() + theme_void() +
+theme(legend.position = "none")
+fig4a <- ggplot(data=Z[Z$site=="SA",], aes(x=t*24, y=Y, by=idx))+
+geom_line(aes(y=Y1), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y2), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y3), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y4), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y5), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y6), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y7), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y8), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y9), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y10), alpha=0.2,size=0.1)+
+geom_line(alpha=0.8, size=0.3, colour="tomato3")+ scale_x_continuous(limits=c(1,24), expand=c(0,0), breaks=seq(0,24,by=6))+ theme_classic()+
+labs(x="Age", y="Weight-for-Length z-score (ZWfL)")
+fig4b <- ggplot(data=Z[Z$site=="TZ",], aes(x=t*24, y=Y, by=idx))+
+geom_line(aes(y=Y1), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y2), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y3), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y4), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y5), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y6), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y7), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y8), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y9), alpha=0.2, size=0.1)+
+geom_line(aes(y=Y10), alpha=0.2,size=0.1)+
+geom_line(alpha=0.8, size=0.3, colour="tomato3")+ scale_x_continuous(limits=c(1,24), expand=c(0,0), breaks=seq(0,24,by=6))+ theme_classic()+
+labs(x="Age", y="Weight-for-Length z-score (ZWfL)") library("cowplot")
+x_min=-4.1; x_max=2.4
+fig4alt <- plot_grid(fig4a + scale_y_continuous(breaks = seq(-4,2,by=2),limits=c(x_min, x_max), expand = c(0,0)),
+#
+c(0,0)),
+c(0,0)) + c(0,0)),
+sa.density + scale_x_continuous(breaks = seq(-4,2,by=2),limits=c(x_min, x_max), expand =
+#
+ggplot(data=SAchild24.df) + theme_void(),
+#
+fig4b + scale_y_continuous(breaks = seq(-4,2,by=2),limits=c(x_min, x_max), expand =
+theme(axis.text.y = element_blank(), axis.title.y = element_blank()),
+tz.density + scale_x_continuous(breaks = seq(-4,2,by=2),limits=c(x_min, x_max), expand =
+#
+nrow = 1, axis="l", align="h", rel_widths = c(0.9,0.1,0.125,0.9,0.1), labels=c("Venda, South Africa","",
+"",
+"Haydom, Tanzania",""),
+label_size = 10,label_fontface="plain", label_x=0,hjust=-0.5)
+ggsave("Figure4ggplot.png", fig4alt, height=4, width = 6)
