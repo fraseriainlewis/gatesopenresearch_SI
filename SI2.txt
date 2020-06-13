@@ -1,0 +1,122 @@
+#!/usr/bin/env wolframscript
+(* ::Package:: *)
+
+(* ::Subsubsection::Initialization:: *)
+(*This contains a list of expressions for the mean and variance of the (Gaussian) slice distribution for a range of different SDE models. *)
+
+
+(* ::Subsection::Initialization:: *)
+(*SDE: 1. Cubic polynomial in time, linear in X, constant diffusion *)
+
+
+(* ::Input::Initialization:: *)
+Subscript[dX, t]=( Subscript[α, 2]+ Subscript[α, 3]t + Subscript[α, 4] t^2+ Subscript[α, 5] t^3+ Subscript[α, 1] Subscript[X, t])dt + σ Subscript[dW, t]
+
+
+(* ::Input::Initialization:: *)
+mySDE=ItoProcess[{a2+a3 t + a4 t^2+ a5 t^3+a1  x   ,sigma },{x,x0},{t,t0}]
+f1=PDF[mySDE[t],x];(* not printed - PDF of slice distribution at time t - Gaussian *)
+E1=FullSimplify[Mean[mySDE[t]]](* printed below - expression for mean of slice distribution at time t *)
+FullSimplify[Variance[mySDE[t]]](* printed below - expression for variance of slice distribution at time t *)
+f2=PDF[NormalDistribution[Mean[mySDE[t]],StandardDeviation[mySDE[t]]],x]; (* not printed *)
+(* a numerical check that slice distribution is Gaussian - these should give identical estimates *)
+f1/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4,a3->0.5,a4->0.6, a5->0.7, sigma->0.9,x->0,t->1}
+f2/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4,a3->0.5,a4->0.6,a5->0.7, sigma->0.9,x->0,t->1}
+
+
+(* ::Subsection::Initialization:: *)
+(*SDE: 2. Quartic polynomial in time, linear in X, constant diffusion *)
+
+
+(* ::Input::Initialization:: *)
+Subscript[dX, t]=( Subscript[α, 2]+ Subscript[α, 3]t + Subscript[α, 4] t^2+ Subscript[α, 5] t^3+Subscript[α, 6] t^4+ Subscript[α, 1] Subscript[X, t])dt + σ Subscript[dW, t]
+
+
+(* ::Input::Initialization:: *)
+mySDE=ItoProcess[{a2+a3 t + a4 t^2+ a5 t^3+a6 t^4 + a1  x   ,sigma },{x,x0},{t,t0}]
+f1=PDF[mySDE[t],x];(* not printed - PDF of slice distribution at time t - Gaussian *)
+E1=FullSimplify[Mean[mySDE[t]]](* printed below - expression for mean of slice distribution at time t *)
+FullSimplify[Variance[mySDE[t]]](* printed below - expression for variance of slice distribution at time t *)
+f2=PDF[NormalDistribution[Mean[mySDE[t]],StandardDeviation[mySDE[t]]],x]; (* not printed *)
+(* a numerical check that slice distribution is Gaussian - these should give identical estimates *)
+f1/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4,a3->0.5,a4->0.6, a5->0.7,a6->0.1, sigma->0.9,x->0,t->1}
+f2/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4,a3->0.5,a4->0.6,a5->0.7, a6->0.1,sigma->0.9,x->0,t->1}
+
+
+(* ::Subsection::Initialization:: *)
+(*SDE: 3. Cubic polynomial in time, linear in X, diffusion linear in time*)
+
+
+(* ::Input::Initialization:: *)
+Subscript[dX, t]=( Subscript[α, 2]+ Subscript[α, 3]t + Subscript[α, 4] t^2+ Subscript[α, 5] t^3+ Subscript[α, 1] Subscript[X, t])dt + σ t Subscript[dW, t]
+
+
+(* ::Input::Initialization:: *)
+mySDE=ItoProcess[{a2+a3 t + a4 t^2+ a5 t^3+ a1  x   ,sigma t},{x,x0},{t,t0}]
+f1=PDF[mySDE[t],x];(* not printed - PDF of slice distribution at time t - Gaussian *)
+E1=FullSimplify[Mean[mySDE[t]]](* printed below - expression for mean of slice distribution at time t *)
+FullSimplify[Variance[mySDE[t]]](* printed below - expression for variance of slice distribution at time t *)
+f2=PDF[NormalDistribution[Mean[mySDE[t]],StandardDeviation[mySDE[t]]],x]; (* not printed *)
+(* a numerical check that slice distribution is Gaussian - these should give identical estimates *)
+f1/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4,a3->0.5,a4->0.6, a5->0.7,a6->0.1, sigma->10,x->0,t->1}
+f2/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4,a3->0.5,a4->0.6,a5->0.7, a6->0.1,sigma->10,x->0,t->1}
+
+
+(* ::Subsection::Initialization:: *)
+(*SDE: 4. Cubic polynomial in time, linear in X, diffusion poly in time*)
+
+
+(* ::Input::Initialization:: *)
+Subscript[dX, t]=( Subscript[α, 2]+ Subscript[α, 3]t + Subscript[α, 4] t^2+ Subscript[α, 5] t^3+ Subscript[α, 1] Subscript[X, t])dt + σ (Subscript[α, 6] + Subscript[α, 7]t+Subscript[α, 8] t^2)Subscript[dW, t]
+
+
+(* ::Input::Initialization:: *)
+mySDE=ItoProcess[{a2+a3 t + a4 t^2+ a5 t^3+ a1  x   ,sigma (a6 + a7 t + a8 t^2)},{x,x0},{t,t0}]
+f1=PDF[mySDE[t],x];(* not printed - PDF of slice distribution at time t - Gaussian *)
+E1=FullSimplify[Mean[mySDE[t]]](* printed below - expression for mean of slice distribution at time t *)
+FullSimplify[Variance[mySDE[t]]](* printed below - expression for variance of slice distribution at time t *)
+f2=PDF[NormalDistribution[Mean[mySDE[t]],StandardDeviation[mySDE[t]]],x]; (* not printed *)
+(* a numerical check that slice distribution is Gaussian - these should give identical estimates *)
+f1/.{x0->1.25,t0->0.1,1->0.3,a2->0.4,a3->0.5,a4->0.6, a5->0.7,a6->0.1,a7->0.8, a8->0.3, sigma->10,x->0,t->1}
+f2/.{x0->1.25,t0->0.1,a1->0.3,a2->0.4,a3->0.5,a4->0.6,a5->0.7, a6->0.1,a7->0.8,a8->0.3,sigma->10,x->0,t->1}
+
+
+(* ::Subsection::Initialization:: *)
+(*SDE: 5.  product of time and state, constant diffusion *)
+
+
+(* ::Input::Initialization:: *)
+Subscript[dX, t]=Subscript[X, t](Subscript[α, 1]+Subscript[α, 2]t)dt + σ Subscript[dW, t]
+
+
+(* ::Input::Initialization:: *)
+mySDE=ItoProcess[{x(a1+a2 t)   ,sigma },{x,x0},{t,t0}]
+f1=PDF[mySDE[t],x];(* not printed - PDF of slice distribution at time t - Gaussian *)
+E1=FullSimplify[Mean[mySDE[t]]](* printed below - expression for mean of slice distribution at time t *)
+FullSimplify[Variance[mySDE[t]]](* printed below - expression for variance of slice distribution at time t *)
+f2=PDF[NormalDistribution[Mean[mySDE[t]],StandardDeviation[mySDE[t]]],x]; (* not printed *)
+(* a numerical check that slice distribution is Gaussian - these should give identical estimates *)
+f1/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4, sigma->0.9,x->0,t->1}
+f2/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4, sigma->0.9,x->0,t->1}
+
+
+(* ::Subsection::Initialization:: *)
+(*SDE: 6.  product of time and state, constant diffusion *)
+
+
+(* ::Input::Initialization:: *)
+Subscript[dX, t]=Subscript[X, t] Subscript[α, 1]dt + (σ /(Subscript[α, 2]+t))Subscript[dW, t]
+
+
+(* ::Input::Initialization:: *)
+mySDE=ItoProcess[{a1*x[t]  ,sigma /(a2+t) },{x,x0},{t,t0}]
+f1=PDF[mySDE[t],x];(* not printed - PDF of slice distribution at time t - Gaussian *)
+E1=FullSimplify[Mean[mySDE[t]]](* printed below - expression for mean of slice distribution at time t *)
+FullSimplify[Variance[mySDE[t]]](* printed below - expression for variance of slice distribution at time t *)
+f2=PDF[NormalDistribution[Mean[mySDE[t]],StandardDeviation[mySDE[t]]],x]; (* not printed *)
+(* a numerical check that slice distribution is Gaussian - these should give identical estimates *)
+f1/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4, sigma->0.9,x->0,t->1}
+f2/.{x0->1.25,t0->0.1, a1->0.3,a2->0.4, sigma->0.9,x->0,t->1}
+
+
+
