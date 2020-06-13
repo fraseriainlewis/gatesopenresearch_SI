@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"/>
+<meta content="SAS 9.4" name="generator"/>
+<title>SAS Output</title>
+<style>
+/*<![CDATA[*/
+.body.c > table, .body.c > pre, .body.c div > table,
+.body.c div > pre, .body.c > table, .body.c > pre,
+.body.j > table, .body.j > pre, .body.j div > table,
+.body.j div > pre, .body.j > table, .body.j > pre,
+.body.c p.note, .body.c p.warning, .body.c p.error, .body.c p.fatal,
+.body.j p.note, .body.j p.warning, .body.j p.error, .body.j p.fatal,
+.body.c > table.layoutcontainer, .body.j > table.layoutcontainer { margin-left: auto; margin-right: auto }
+.layoutregion.l table, .layoutregion.l pre, .layoutregion.l p.note,
+.layoutregion.l p.warning, .layoutregion.l p.error, .layoutregion.l p.fatal { margin-left: 0 }
+.layoutregion.c table, .layoutregion.c pre, .layoutregion.c p.note,
+.layoutregion.c p.warning, .layoutregion.c p.error, .layoutregion.c p.fatal { margin-left: auto; margin-right: auto }
+.layoutregion.r table, .layoutregion.r pre, .layoutregion.r p.note,
+.layoutregion.r table, .layoutregion.r pre, .layoutregion.r p.note,
+.layoutregion.r p.warning, .layoutregion.r p.error, .layoutregion.r p.fatal { margin-right: 0 }
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block }
+html{ font-size: 100% }
+.body { margin: 1em; font-size: 13px; line-height: 1.231 }
+sup { position: relative; vertical-align: baseline; bottom: 0.25em; font-size: 0.8em }
+sub { position: relative; vertical-align: baseline; top: 0.25em; font-size: 0.8em }
+ul, ol { margin: 1em 0; padding: 0 0 0 40px }
+dd { margin: 0 0 0 40px }
+nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0 }
+img { border: 0; vertical-align: middle }
+svg:not(:root) { overflow: hidden }
+figure { margin: 0 }
+table { border-collapse: collapse; border-spacing: 0 }
+.layoutcontainer { border-collapse: separate; border-spacing: 0 }
+p { margin-top: 0; text-align: left }
+h1.heading1 { text-align: left }
+h2.heading2 { text-align: left }
+h3.heading3 { text-align: left }
+h4.heading4 { text-align: left }
+h5.heading5 { text-align: left }
+h6.heading6 { text-align: left }
+span { text-align: left }
+table { margin-bottom: 1em }
+td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td[class$="fixed"], th[class$="fixed"] { white-space: pre }
+section, article { padding-top: 1px; padding-bottom: 8px }
+hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
+.stacked-value { text-align: left; display: block }
+.stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
+.stacked-cell > div.data { border-width: 0 }
+.systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
+.systitleandfootercontainer > p { margin: 0 }
+.systitleandfootercontainer > p > span { display: inline-block; width: 100%; white-space: normal }
+.batch { display: table }
+.toc { display: none }
+.proc_note_group, .proc_title_group { margin-bottom: 1em }
+p.proctitle { margin: 0 }
+p.note, p.warning, p.error, p.fatal { display: table }
+.notebanner, .warnbanner, .errorbanner, .fatalbanner,
+.notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
+.notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
+.body > div > ol li { text-align: left }
+.beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
+.c { text-align: center }
+.r { text-align: right }
+.l { text-align: left }
+.j { text-align: justify }
+.d { text-align: right }
+.b { vertical-align: bottom }
+.m { vertical-align: middle }
+.t { vertical-align: top }
+.accessiblecaption {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+a:active { color: #800080 }
+.aftercaption {
+    background-color: #fafbfe;
+    border-spacing: 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    padding-top: 4pt;
+}
+.batch > colgroup {
+    border-left: 1px solid #c1c1c1;
+    border-right: 1px solid #c1c1c1;
+}
+.batch > tbody, .batch > thead, .batch > tfoot {
+    border-top: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+}
+.batch { border: hidden; }
+.batch {
+    background-color: #fafbfe;
+    border: 1px solid #c1c1c1;
+    border-collapse: separate;
+    border-spacing: 1px;
+    color: #000000;
+    font-family: 'SAS Monospace', 'Courier New', Courier, monospace;
+    font-size: 14pt;
+    font-style: normal;
+    font-weight: normal;
+    padding: 7px;
+    }
+.beforecaption {
+    background-color: #fafbfe;
+    border-spacing: 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.body {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.bodydate {
+    background-color: #fafbfe;
+    border-spacing: 0;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    text-align: right;
+    vertical-align: top;
+    width: 100%;
+}
+.bycontentfolder {
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: none;
+    margin-left: 6pt;
+}
+.byline {
+    background-color: #fafbfe;
+    border-spacing: 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.bylinecontainer > col, .bylinecontainer > colgroup > col, .bylinecontainer > colgroup, .bylinecontainer > tr, .bylinecontainer > * > tr, .bylinecontainer > thead, .bylinecontainer > tbody, .bylinecontainer > tfoot { border: none; }
+.bylinecontainer {
+    background-color: #fafbfe;
+    border: none;
+    border-spacing: 1px;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    width: 100%;
+}
+.caption {
+    background-color: #fafbfe;
+    border-spacing: 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.cell, .container {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.contentfolder, .contentitem {
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: none;
+    margin-left: 6pt;
+}
+.contentproclabel, .contentprocname {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.contents {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: decimal;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.contentsdate {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    width: 100%;
+}
+.contenttitle {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+}
+.continued {
+    background-color: #fafbfe;
+    border-spacing: 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    width: 100%;
+}
+.data, .dataemphasis {
+    background-color: #ffffff;
+    border-color: #c1c1c1;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.dataemphasisfixed {
+    background-color: #ffffff;
+    border-color: #c1c1c1;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+.dataempty {
+    background-color: #ffffff;
+    border-color: #c1c1c1;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.datafixed {
+    background-color: #ffffff;
+    border-color: #c1c1c1;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    font-family: 'Courier New', Courier;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.datastrong {
+    background-color: #ffffff;
+    border-color: #c1c1c1;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.datastrongfixed {
+    background-color: #ffffff;
+    border-color: #c1c1c1;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #000000;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.date {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    width: 100%;
+}
+.document {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.errorbanner {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.errorcontent {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.errorcontentfixed {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Courier New', Courier;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.extendedpage {
+    background-color: #fafbfe;
+    border-style: solid;
+    border-width: 1pt;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+    text-align: center;
+}
+.fatalbanner {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.fatalcontent {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.fatalcontentfixed {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Courier New', Courier;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.folderaction {
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: none;
+    margin-left: 6pt;
+}
+.footer {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.footeremphasis {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+.footeremphasisfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+.footerempty {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.footerfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.footerstrong {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.footerstrongfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.frame {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.graph > colgroup {
+    border-left: 1px solid #c1c1c1;
+    border-right: 1px solid #c1c1c1;
+}
+.graph > tbody, .graph > thead, .graph > tfoot {
+    border-top: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+}
+.graph { border: hidden; }
+.graph {
+    background-color: #fafbfe;
+    border: 1px solid #c1c1c1;
+    border-collapse: separate;
+    border-spacing: 1px;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    }
+.header {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.headeremphasis {
+    background-color: #d8dbd3;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+.headeremphasisfixed {
+    background-color: #d8dbd3;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #000000;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+.headerempty {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.headerfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.headersandfooters {
+    background-color: #edf2f9;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.headerstrong {
+    background-color: #d8dbd3;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.headerstrongfixed {
+    background-color: #d8dbd3;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #000000;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.heading1, .heading2, .heading3, .heading4, .heading5, .heading6 { font-family: Arial, Helvetica, sans-serif }
+.index {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.indexaction, .indexitem {
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: none;
+    margin-left: 6pt;
+}
+.indexprocname {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.indextitle {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+}
+.layoutcontainer, .layoutregion {
+    border-width: 0;
+    border-spacing: 30px;
+}
+.linecontent {
+    background-color: #fafbfe;
+    border-color: #c1c1c1;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+a:link { color: #0000ff }
+.list {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: disc;
+}
+.list10 {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: square;
+}
+.list2 {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: circle;
+}
+.list3, .list4, .list5, .list6, .list7, .list8, .list9 {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: square;
+}
+.listitem {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: disc;
+}
+.listitem10 {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: square;
+}
+.listitem2 {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: circle;
+}
+.listitem3, .listitem4, .listitem5, .listitem6, .listitem7, .listitem8, .listitem9 {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: square;
+}
+.note {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.notebanner {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.notecontent {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.notecontentfixed {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Courier New', Courier;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.output > colgroup {
+    border-left: 1px solid #c1c1c1;
+    border-right: 1px solid #c1c1c1;
+}
+.output > tbody, .output > thead, .output > tfoot {
+    border-top: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+}
+.output { border: hidden; }
+.output {
+    background-color: #fafbfe;
+    border: 1px solid #c1c1c1;
+    border-collapse: separate;
+    border-spacing: 1px;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    }
+.pageno {
+    background-color: #fafbfe;
+    border-spacing: 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    text-align: right;
+    vertical-align: top;
+}
+.pages {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: decimal;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.pagesdate {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    width: 100%;
+}
+.pagesitem {
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    list-style-type: none;
+    margin-left: 6pt;
+}
+.pagesproclabel, .pagesprocname {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.pagestitle {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+}
+.paragraph {
+    background-color: #fafbfe;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.parskip > col, .parskip > colgroup > col, .parskip > colgroup, .parskip > tr, .parskip > * > tr, .parskip > thead, .parskip > tbody, .parskip > tfoot { border: none; }
+.parskip {
+    border: none;
+    border-spacing: 0;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    }
+.prepage {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    text-align: left;
+}
+.proctitle {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.proctitlefixed {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.rowfooter {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.rowfooteremphasis {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+.rowfooteremphasisfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+.rowfooterempty {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.rowfooterfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.rowfooterstrong {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.rowfooterstrongfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.rowheader {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.rowheaderemphasis {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+.rowheaderemphasisfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+.rowheaderempty {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.rowheaderfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.rowheaderstrong {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.rowheaderstrongfixed {
+    background-color: #edf2f9;
+    border-color: #b0b7bb;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    color: #112277;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.systemfooter, .systemfooter10, .systemfooter2, .systemfooter3, .systemfooter4, .systemfooter5, .systemfooter6, .systemfooter7, .systemfooter8, .systemfooter9 {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.systemtitle, .systemtitle10, .systemtitle2, .systemtitle3, .systemtitle4, .systemtitle5, .systemtitle6, .systemtitle7, .systemtitle8, .systemtitle9 {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: bold;
+}
+.systitleandfootercontainer > col, .systitleandfootercontainer > colgroup > col, .systitleandfootercontainer > colgroup, .systitleandfootercontainer > tr, .systitleandfootercontainer > * > tr, .systitleandfootercontainer > thead, .systitleandfootercontainer > tbody, .systitleandfootercontainer > tfoot { border: none; }
+.systitleandfootercontainer {
+    background-color: #fafbfe;
+    border: none;
+    border-spacing: 1px;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    width: 100%;
+}
+.table > col, .table > colgroup > col {
+    border-left: 1px solid #c1c1c1;
+    border-right: 0 solid #c1c1c1;
+}
+.table > tr, .table > * > tr {
+    border-top: 1px solid #c1c1c1;
+    border-bottom: 0 solid #c1c1c1;
+}
+.table { border: hidden; }
+.table {
+    border-color: #c1c1c1;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    }
+.titleandnotecontainer > col, .titleandnotecontainer > colgroup > col, .titleandnotecontainer > colgroup, .titleandnotecontainer > tr, .titleandnotecontainer > * > tr, .titleandnotecontainer > thead, .titleandnotecontainer > tbody, .titleandnotecontainer > tfoot { border: none; }
+.titleandnotecontainer {
+    background-color: #fafbfe;
+    border: none;
+    border-spacing: 1px;
+    color: #000000;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    width: 100%;
+}
+.titlesandfooters {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.usertext {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+a:visited { color: #800080 }
+.warnbanner {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+}
+.warncontent {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Avenir Next for SAS', Arial, 'Albany AMT', Helvetica, Helv;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+.warncontentfixed {
+    background-color: #fafbfe;
+    color: #112277;
+    font-family: 'Courier New', Courier;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+/*]]>*/
+</style>
+</head>
+<body class="c body">
+<div style="padding-bottom: 8px; padding-top: 1px">
+<div id="IDX" class="proc_title_group">
+<p class="c proctitle">The NLMIXED Procedure</p>
+</div>
+<div style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Specifications">
+<caption aria-label="Specifications"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Specifications</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">Data Set</th>
+<td class="data">WORK.TZ</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Dependent Variable</th>
+<td class="data">zwfl1</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Distribution for Dependent Variable</th>
+<td class="data">Normal</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Optimization Technique</th>
+<td class="data">Dual Quasi-Newton</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Integration Method</th>
+<td class="data">None</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX1" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Dimensions">
+<caption aria-label="Dimensions"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Dimensions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">Observations Used</th>
+<td class="r data">5209</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Observations Not Used</th>
+<td class="r data">0</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Total Observations</th>
+<td class="r data">5209</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Parameters</th>
+<td class="r data">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX2" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Initial Parameters">
+<caption aria-label="Initial Parameters"></caption>
+<colgroup><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="4" scope="colgroup">Initial Parameters</th>
+</tr>
+<tr>
+<th class="r b header" scope="col">sigma2</th>
+<th class="r b header" scope="col">theta</th>
+<th class="r b header" scope="col">mu</th>
+<th class="r b header" scope="col">Negative<br/>Log<br/>Likelihood</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">10</td>
+<td class="r data">5</td>
+<td class="r data">0.5</td>
+<td class="r data">6784.13483</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX3" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Iteration History">
+<caption aria-label="Iteration History"></caption>
+<colgroup><col/></colgroup><colgroup><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="6" scope="colgroup">Iteration History</th>
+</tr>
+<tr>
+<th class="r b header" scope="col">Iteration</th>
+<th class="r b header" scope="col">Calls</th>
+<th class="r b header" scope="col">Negative<br/>Log<br/>Likelihood</th>
+<th class="r b header" scope="col">Difference</th>
+<th class="r b header" scope="col">Maximum<br/>Gradient</th>
+<th class="r b header" scope="col">Slope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="r rowheader" scope="row">1</th>
+<td class="r data">6</td>
+<td class="r data">6621.4342</td>
+<td class="r data">162.7006</td>
+<td class="r data">222.142</td>
+<td class="r data" style="white-space: nowrap">-1779.55</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">2</th>
+<td class="r data">10</td>
+<td class="r data">6233.9427</td>
+<td class="r data">387.4915</td>
+<td class="r data">45.7802</td>
+<td class="r data" style="white-space: nowrap">-1653.08</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">3</th>
+<td class="r data">14</td>
+<td class="r data">6100.4405</td>
+<td class="r data">133.5022</td>
+<td class="r data">59.6538</td>
+<td class="r data" style="white-space: nowrap">-73.9320</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">4</th>
+<td class="r data">16</td>
+<td class="r data">6089.6968</td>
+<td class="r data">10.74377</td>
+<td class="r data">26.7010</td>
+<td class="r data" style="white-space: nowrap">-19.7470</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">5</th>
+<td class="r data">18</td>
+<td class="r data">6087.5843</td>
+<td class="r data">2.112438</td>
+<td class="r data">4.61093</td>
+<td class="r data" style="white-space: nowrap">-3.37527</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">6</th>
+<td class="r data">21</td>
+<td class="r data">6087.4325</td>
+<td class="r data">0.151862</td>
+<td class="r data">0.87468</td>
+<td class="r data" style="white-space: nowrap">-0.29761</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">7</th>
+<td class="r data">24</td>
+<td class="r data">6087.4286</td>
+<td class="r data">0.003866</td>
+<td class="r data">0.98151</td>
+<td class="r data" style="white-space: nowrap">-0.00352</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">8</th>
+<td class="r data">27</td>
+<td class="r data">6087.4273</td>
+<td class="r data">0.001363</td>
+<td class="r data">0.010524</td>
+<td class="r data" style="white-space: nowrap">-0.00195</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">9</th>
+<td class="r data">30</td>
+<td class="r data">6087.4273</td>
+<td class="r data" style="white-space: nowrap">2.17E-6</td>
+<td class="r data">0.000071</td>
+<td class="r data" style="white-space: nowrap">-4.34E-6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX4" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Convergence Status">
+<caption aria-label="Convergence Status"></caption>
+<colgroup><col/></colgroup>
+<tbody>
+<tr>
+<td class="c data">NOTE: GCONV convergence criterion satisfied.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX5" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Fit Statistics">
+<caption aria-label="Fit Statistics"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Fit Statistics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">-2 Log Likelihood</th>
+<td class="r data">12175</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">AIC (smaller is better)</th>
+<td class="r data">12181</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">AICC (smaller is better)</th>
+<td class="r data">12181</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">BIC (smaller is better)</th>
+<td class="r data">12201</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX6" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Parameter Estimates">
+<caption aria-label="Parameter Estimates"></caption>
+<colgroup><col/></colgroup><colgroup><col/><col/><col/><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="9" scope="colgroup">Parameter Estimates</th>
+</tr>
+<tr>
+<th class="b header" scope="col">Parameter</th>
+<th class="r b header" scope="col">Estimate</th>
+<th class="r b header" scope="col">Standard<br/>Error</th>
+<th class="r b header" scope="col">DF</th>
+<th class="r b header" scope="col">t&#160;Value</th>
+<th class="r b header" scope="col">Pr&#160;&gt;&#160;|t|</th>
+<th class="c b header" colspan="2" scope="colgroup">95% Confidence Limits</th>
+<th class="r b header" scope="col">Gradient</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">sigma2</th>
+<td class="r data">20.6396</td>
+<td class="r data">0.4795</td>
+<td class="r data">5209</td>
+<td class="r data">43.04</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">19.6995</td>
+<td class="r data">21.5797</td>
+<td class="r data" style="white-space: nowrap">2.811E-6</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">theta</th>
+<td class="r data">8.7987</td>
+<td class="r data">0.3396</td>
+<td class="r data">5209</td>
+<td class="r data">25.91</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">8.1329</td>
+<td class="r data">9.4645</td>
+<td class="r data" style="white-space: nowrap">-3.01E-6</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">mu</th>
+<td class="r data">0.2439</td>
+<td class="r data">0.03523</td>
+<td class="r data">5209</td>
+<td class="r data">6.92</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">0.1749</td>
+<td class="r data">0.3130</td>
+<td class="r data">0.000071</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="padding-bottom: 8px; padding-top: 1px">
+<hr class="pagebreak"/>
+<div id="IDX7" class="proc_title_group">
+<p class="c proctitle">The NLMIXED Procedure</p>
+</div>
+<div style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Specifications">
+<caption aria-label="Specifications"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Specifications</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">Data Set</th>
+<td class="data">WORK.TZ</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Dependent Variable</th>
+<td class="data">zwfl1</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Distribution for Dependent Variable</th>
+<td class="data">Normal</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Optimization Technique</th>
+<td class="data">Dual Quasi-Newton</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Integration Method</th>
+<td class="data">None</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX8" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Dimensions">
+<caption aria-label="Dimensions"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Dimensions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">Observations Used</th>
+<td class="r data">5209</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Observations Not Used</th>
+<td class="r data">0</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Total Observations</th>
+<td class="r data">5209</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Parameters</th>
+<td class="r data">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX9" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Initial Parameters">
+<caption aria-label="Initial Parameters"></caption>
+<colgroup><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="4" scope="colgroup">Initial Parameters</th>
+</tr>
+<tr>
+<th class="r b header" scope="col">sigma2</th>
+<th class="r b header" scope="col">a1</th>
+<th class="r b header" scope="col">a2</th>
+<th class="r b header" scope="col">Negative<br/>Log<br/>Likelihood</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">10</td>
+<td class="r data">1</td>
+<td class="r data">1</td>
+<td class="r data">11523.6617</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX10" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Iteration History">
+<caption aria-label="Iteration History"></caption>
+<colgroup><col/></colgroup><colgroup><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="6" scope="colgroup">Iteration History</th>
+</tr>
+<tr>
+<th class="r b header" scope="col">Iteration</th>
+<th class="r b header" scope="col">Calls</th>
+<th class="r b header" scope="col">Negative<br/>Log<br/>Likelihood</th>
+<th class="r b header" scope="col">Difference</th>
+<th class="r b header" scope="col">Maximum<br/>Gradient</th>
+<th class="r b header" scope="col">Slope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="r rowheader" scope="row">1</th>
+<td class="r data">4</td>
+<td class="r data">11115.9043</td>
+<td class="r data">407.7573</td>
+<td class="r data">226.565</td>
+<td class="r data" style="white-space: nowrap">-5830.04</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">2</th>
+<td class="r data">11</td>
+<td class="r data">10022.0389</td>
+<td class="r data">1093.865</td>
+<td class="r data">933.189</td>
+<td class="r data" style="white-space: nowrap">-853.401</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">3</th>
+<td class="r data">19</td>
+<td class="r data">9672.9576</td>
+<td class="r data">349.0813</td>
+<td class="r data">1881.34</td>
+<td class="r data" style="white-space: nowrap">-3342.65</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">4</th>
+<td class="r data">24</td>
+<td class="r data">9257.1059</td>
+<td class="r data">415.8516</td>
+<td class="r data">2698.73</td>
+<td class="r data" style="white-space: nowrap">-2809.39</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">5</th>
+<td class="r data">26</td>
+<td class="r data">8961.6236</td>
+<td class="r data">295.4824</td>
+<td class="r data">3402.39</td>
+<td class="r data" style="white-space: nowrap">-4485.52</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">6</th>
+<td class="r data">30</td>
+<td class="r data">7911.9826</td>
+<td class="r data">1049.641</td>
+<td class="r data">859.842</td>
+<td class="r data" style="white-space: nowrap">-4869.56</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">7</th>
+<td class="r data">33</td>
+<td class="r data">7813.5679</td>
+<td class="r data">98.41473</td>
+<td class="r data">568.468</td>
+<td class="r data" style="white-space: nowrap">-831.333</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">8</th>
+<td class="r data">35</td>
+<td class="r data">7762.7168</td>
+<td class="r data">50.85109</td>
+<td class="r data">283.871</td>
+<td class="r data" style="white-space: nowrap">-132.432</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">9</th>
+<td class="r data">38</td>
+<td class="r data">7731.1274</td>
+<td class="r data">31.58942</td>
+<td class="r data">89.2283</td>
+<td class="r data" style="white-space: nowrap">-78.0377</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">10</th>
+<td class="r data">41</td>
+<td class="r data">7724.3033</td>
+<td class="r data">6.824013</td>
+<td class="r data">41.9660</td>
+<td class="r data" style="white-space: nowrap">-18.3628</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">11</th>
+<td class="r data">44</td>
+<td class="r data">7723.7956</td>
+<td class="r data">0.507696</td>
+<td class="r data">7.83368</td>
+<td class="r data" style="white-space: nowrap">-0.55851</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">12</th>
+<td class="r data">47</td>
+<td class="r data">7723.7731</td>
+<td class="r data">0.022498</td>
+<td class="r data">0.32930</td>
+<td class="r data" style="white-space: nowrap">-0.04033</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">13</th>
+<td class="r data">50</td>
+<td class="r data">7723.7731</td>
+<td class="r data">0.000034</td>
+<td class="r data">0.003032</td>
+<td class="r data" style="white-space: nowrap">-0.00007</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX11" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Convergence Status">
+<caption aria-label="Convergence Status"></caption>
+<colgroup><col/></colgroup>
+<tbody>
+<tr>
+<td class="c data">NOTE: GCONV convergence criterion satisfied.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX12" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Fit Statistics">
+<caption aria-label="Fit Statistics"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Fit Statistics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">-2 Log Likelihood</th>
+<td class="r data">15448</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">AIC (smaller is better)</th>
+<td class="r data">15454</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">AICC (smaller is better)</th>
+<td class="r data">15454</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">BIC (smaller is better)</th>
+<td class="r data">15473</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX13" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Parameter Estimates">
+<caption aria-label="Parameter Estimates"></caption>
+<colgroup><col/></colgroup><colgroup><col/><col/><col/><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="9" scope="colgroup">Parameter Estimates</th>
+</tr>
+<tr>
+<th class="b header" scope="col">Parameter</th>
+<th class="r b header" scope="col">Estimate</th>
+<th class="r b header" scope="col">Standard<br/>Error</th>
+<th class="r b header" scope="col">DF</th>
+<th class="r b header" scope="col">t&#160;Value</th>
+<th class="r b header" scope="col">Pr&#160;&gt;&#160;|t|</th>
+<th class="c b header" colspan="2" scope="colgroup">95% Confidence Limits</th>
+<th class="r b header" scope="col">Gradient</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">sigma2</th>
+<td class="r data">1.1362</td>
+<td class="r data">0.02226</td>
+<td class="r data">5209</td>
+<td class="r data">51.03</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">1.0925</td>
+<td class="r data">1.1798</td>
+<td class="r data" style="white-space: nowrap">-0.00166</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">a1</th>
+<td class="r data">0.7319</td>
+<td class="r data">0.03032</td>
+<td class="r data">5209</td>
+<td class="r data">24.14</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">0.6725</td>
+<td class="r data">0.7914</td>
+<td class="r data">0.003032</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">a2</th>
+<td class="r data" style="white-space: nowrap">-0.8082</td>
+<td class="r data">0.05148</td>
+<td class="r data">5209</td>
+<td class="r data" style="white-space: nowrap">-15.70</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data" style="white-space: nowrap">-0.9091</td>
+<td class="r data" style="white-space: nowrap">-0.7073</td>
+<td class="r data">0.000100</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="padding-bottom: 8px; padding-top: 1px">
+<hr class="pagebreak"/>
+<div id="IDX14" class="proc_title_group">
+<p class="c proctitle">The NLMIXED Procedure</p>
+</div>
+<div style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Specifications">
+<caption aria-label="Specifications"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Specifications</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">Data Set</th>
+<td class="data">WORK.TZ</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Dependent Variable</th>
+<td class="data">zwfl1</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Distribution for Dependent Variable</th>
+<td class="data">Normal</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Random Effects</th>
+<td class="data">b1 b2</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Distribution for Random Effects</th>
+<td class="data">Normal</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Subject Variable</th>
+<td class="data">subjid</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Optimization Technique</th>
+<td class="data">Dual Quasi-Newton</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Integration Method</th>
+<td class="data">Adaptive Gaussian Quadrature</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX15" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Dimensions">
+<caption aria-label="Dimensions"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Dimensions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">Observations Used</th>
+<td class="r data">5209</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Observations Not Used</th>
+<td class="r data">0</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Total Observations</th>
+<td class="r data">5209</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Subjects</th>
+<td class="r data">224</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Max Obs per Subject</th>
+<td class="r data">24</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Parameters</th>
+<td class="r data">6</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Quadrature Points</th>
+<td class="r data">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX16" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Initial Parameters">
+<caption aria-label="Initial Parameters"></caption>
+<colgroup><col/><col/><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="7" scope="colgroup">Initial Parameters</th>
+</tr>
+<tr>
+<th class="r b header" scope="col">sigma2</th>
+<th class="r b header" scope="col">theta</th>
+<th class="r b header" scope="col">mu</th>
+<th class="r b header" scope="col">s2b1</th>
+<th class="r b header" scope="col">cb12</th>
+<th class="r b header" scope="col">s2b2</th>
+<th class="r b header" scope="col">Negative<br/>Log<br/>Likelihood</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">10</td>
+<td class="r data">9</td>
+<td class="r data">0</td>
+<td class="r data">1</td>
+<td class="r data">1</td>
+<td class="r data">1</td>
+<td class="r data">6717.36264</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX17" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Iteration History">
+<caption aria-label="Iteration History"></caption>
+<colgroup><col/></colgroup><colgroup><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="6" scope="colgroup">Iteration History</th>
+</tr>
+<tr>
+<th class="r b header" scope="col">Iteration</th>
+<th class="r b header" scope="col">Calls</th>
+<th class="r b header" scope="col">Negative<br/>Log<br/>Likelihood</th>
+<th class="r b header" scope="col">Difference</th>
+<th class="r b header" scope="col">Maximum<br/>Gradient</th>
+<th class="r b header" scope="col">Slope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="r rowheader" scope="row">1</th>
+<td class="r data">6</td>
+<td class="r data">6251.1499</td>
+<td class="r data">466.2127</td>
+<td class="r data">145.521</td>
+<td class="r data" style="white-space: nowrap">-1258.97</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">2</th>
+<td class="r data">11</td>
+<td class="r data">6107.0402</td>
+<td class="r data">144.1097</td>
+<td class="r data">90.2065</td>
+<td class="r data" style="white-space: nowrap">-1143.48</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">3</th>
+<td class="r data">15</td>
+<td class="r data">6003.0750</td>
+<td class="r data">103.9652</td>
+<td class="r data">41.4921</td>
+<td class="r data" style="white-space: nowrap">-105.112</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">4</th>
+<td class="r data">20</td>
+<td class="r data">5920.6810</td>
+<td class="r data">82.39404</td>
+<td class="r data">42.7891</td>
+<td class="r data" style="white-space: nowrap">-95.7612</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">5</th>
+<td class="r data">22</td>
+<td class="r data">5910.2201</td>
+<td class="r data">10.46088</td>
+<td class="r data">243.346</td>
+<td class="r data" style="white-space: nowrap">-52.7983</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">6</th>
+<td class="r data">26</td>
+<td class="r data">5869.0756</td>
+<td class="r data">41.14447</td>
+<td class="r data">91.5244</td>
+<td class="r data" style="white-space: nowrap">-225.712</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">7</th>
+<td class="r data">28</td>
+<td class="r data">5841.2786</td>
+<td class="r data">27.79704</td>
+<td class="r data">86.1675</td>
+<td class="r data" style="white-space: nowrap">-60.0692</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">8</th>
+<td class="r data">30</td>
+<td class="r data">5829.8366</td>
+<td class="r data">11.442</td>
+<td class="r data">88.0361</td>
+<td class="r data" style="white-space: nowrap">-27.1118</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">9</th>
+<td class="r data">32</td>
+<td class="r data">5815.5070</td>
+<td class="r data">14.32961</td>
+<td class="r data">24.2221</td>
+<td class="r data" style="white-space: nowrap">-24.6275</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">10</th>
+<td class="r data">35</td>
+<td class="r data">5806.2925</td>
+<td class="r data">9.214457</td>
+<td class="r data">13.3916</td>
+<td class="r data" style="white-space: nowrap">-4.39036</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">11</th>
+<td class="r data">38</td>
+<td class="r data">5805.5818</td>
+<td class="r data">0.710659</td>
+<td class="r data">7.81910</td>
+<td class="r data" style="white-space: nowrap">-0.76704</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">12</th>
+<td class="r data">40</td>
+<td class="r data">5804.5405</td>
+<td class="r data">1.041295</td>
+<td class="r data">4.39772</td>
+<td class="r data" style="white-space: nowrap">-0.79146</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">13</th>
+<td class="r data">43</td>
+<td class="r data">5804.2210</td>
+<td class="r data">0.319542</td>
+<td class="r data">8.41173</td>
+<td class="r data" style="white-space: nowrap">-0.32056</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">14</th>
+<td class="r data">47</td>
+<td class="r data">5803.3887</td>
+<td class="r data">0.832267</td>
+<td class="r data">5.31076</td>
+<td class="r data" style="white-space: nowrap">-0.26358</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">15</th>
+<td class="r data">51</td>
+<td class="r data">5801.6182</td>
+<td class="r data">1.77054</td>
+<td class="r data">5.03523</td>
+<td class="r data" style="white-space: nowrap">-0.88704</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">16</th>
+<td class="r data">53</td>
+<td class="r data">5799.3041</td>
+<td class="r data">2.314101</td>
+<td class="r data">16.6806</td>
+<td class="r data" style="white-space: nowrap">-1.40945</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">17</th>
+<td class="r data">57</td>
+<td class="r data">5787.1105</td>
+<td class="r data">12.19355</td>
+<td class="r data">31.0200</td>
+<td class="r data" style="white-space: nowrap">-2.73511</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">18</th>
+<td class="r data">59</td>
+<td class="r data">5771.3798</td>
+<td class="r data">15.73078</td>
+<td class="r data">16.6651</td>
+<td class="r data" style="white-space: nowrap">-6.99443</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">19</th>
+<td class="r data">347</td>
+<td class="r data">5768.7879</td>
+<td class="r data">2.59183</td>
+<td class="r data">3.85334</td>
+<td class="r data" style="white-space: nowrap">-3.46951</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">20</th>
+<td class="r data">349</td>
+<td class="r data">5766.7891</td>
+<td class="r data">1.9988</td>
+<td class="r data">22.2315</td>
+<td class="r data" style="white-space: nowrap">-3.01700</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">21</th>
+<td class="r data">352</td>
+<td class="r data">5765.9766</td>
+<td class="r data">0.812513</td>
+<td class="r data">1.44799</td>
+<td class="r data" style="white-space: nowrap">-1.31524</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">22</th>
+<td class="r data">355</td>
+<td class="r data">5765.9128</td>
+<td class="r data">0.063848</td>
+<td class="r data">1.59010</td>
+<td class="r data" style="white-space: nowrap">-0.06204</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">23</th>
+<td class="r data">358</td>
+<td class="r data">5765.9077</td>
+<td class="r data">0.005087</td>
+<td class="r data">0.12435</td>
+<td class="r data" style="white-space: nowrap">-0.00981</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">24</th>
+<td class="r data">361</td>
+<td class="r data">5765.9073</td>
+<td class="r data">0.000353</td>
+<td class="r data">0.15264</td>
+<td class="r data" style="white-space: nowrap">-0.00033</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">25</th>
+<td class="r data">363</td>
+<td class="r data">5765.9071</td>
+<td class="r data">0.000224</td>
+<td class="r data">0.12637</td>
+<td class="r data" style="white-space: nowrap">-0.00023</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">26</th>
+<td class="r data">366</td>
+<td class="r data">5765.9070</td>
+<td class="r data">0.0001</td>
+<td class="r data">0.018622</td>
+<td class="r data" style="white-space: nowrap">-0.00018</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">27</th>
+<td class="r data">369</td>
+<td class="r data">5765.9070</td>
+<td class="r data" style="white-space: nowrap">7.455E-6</td>
+<td class="r data">0.000761</td>
+<td class="r data" style="white-space: nowrap">-8.32E-6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX18" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Convergence Status">
+<caption aria-label="Convergence Status"></caption>
+<colgroup><col/></colgroup>
+<tbody>
+<tr>
+<td class="c data">NOTE: GCONV convergence criterion satisfied.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX19" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Fit Statistics">
+<caption aria-label="Fit Statistics"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Fit Statistics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">-2 Log Likelihood</th>
+<td class="r data">11532</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">AIC (smaller is better)</th>
+<td class="r data">11544</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">AICC (smaller is better)</th>
+<td class="r data">11544</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">BIC (smaller is better)</th>
+<td class="r data">11564</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX20" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Parameter Estimates">
+<caption aria-label="Parameter Estimates"></caption>
+<colgroup><col/></colgroup><colgroup><col/><col/><col/><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="9" scope="colgroup">Parameter Estimates</th>
+</tr>
+<tr>
+<th class="b header" scope="col">Parameter</th>
+<th class="r b header" scope="col">Estimate</th>
+<th class="r b header" scope="col">Standard<br/>Error</th>
+<th class="r b header" scope="col">DF</th>
+<th class="r b header" scope="col">t&#160;Value</th>
+<th class="r b header" scope="col">Pr&#160;&gt;&#160;|t|</th>
+<th class="c b header" colspan="2" scope="colgroup">95% Confidence Limits</th>
+<th class="r b header" scope="col">Gradient</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">sigma2</th>
+<td class="r data">27.0367</td>
+<td class="r data">0.8525</td>
+<td class="r data">222</td>
+<td class="r data">31.71</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">25.3567</td>
+<td class="r data">28.7167</td>
+<td class="r data" style="white-space: nowrap">-0.00034</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">theta</th>
+<td class="r data">26.4382</td>
+<td class="r data">1.2413</td>
+<td class="r data">222</td>
+<td class="r data">21.30</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">23.9920</td>
+<td class="r data">28.8845</td>
+<td class="r data">0.000085</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">mu</th>
+<td class="r data">0.2852</td>
+<td class="r data">0.05497</td>
+<td class="r data">222</td>
+<td class="r data">5.19</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">0.1769</td>
+<td class="r data">0.3935</td>
+<td class="r data">0.000431</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">s2b1</th>
+<td class="r data">0.5785</td>
+<td class="r data">0.06201</td>
+<td class="r data">222</td>
+<td class="r data">9.33</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">0.4563</td>
+<td class="r data">0.7007</td>
+<td class="r data" style="white-space: nowrap">-0.00076</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">cb12</th>
+<td class="r data">1.7657</td>
+<td class="r data">0.8195</td>
+<td class="r data">222</td>
+<td class="r data">2.15</td>
+<td class="r data">0.0323</td>
+<td class="r data">0.1508</td>
+<td class="r data">3.3806</td>
+<td class="r data" style="white-space: nowrap">-0.00008</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">s2b2</th>
+<td class="r data">91.1924</td>
+<td class="r data">19.2121</td>
+<td class="r data">222</td>
+<td class="r data">4.75</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">53.3309</td>
+<td class="r data">129.05</td>
+<td class="r data" style="white-space: nowrap">-4.39E-6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="padding-bottom: 8px; padding-top: 1px">
+<hr class="pagebreak"/>
+<div id="IDX21" class="proc_title_group">
+<p class="c proctitle">The NLMIXED Procedure</p>
+</div>
+<div style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Specifications">
+<caption aria-label="Specifications"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Specifications</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">Data Set</th>
+<td class="data">WORK.TZ</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Dependent Variable</th>
+<td class="data">zwfl1</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Distribution for Dependent Variable</th>
+<td class="data">Normal</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Random Effects</th>
+<td class="data">b1 b2</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Distribution for Random Effects</th>
+<td class="data">Normal</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Subject Variable</th>
+<td class="data">subjid</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Optimization Technique</th>
+<td class="data">Dual Quasi-Newton</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Integration Method</th>
+<td class="data">Adaptive Gaussian Quadrature</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX22" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Dimensions">
+<caption aria-label="Dimensions"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Dimensions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">Observations Used</th>
+<td class="r data">5209</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Observations Not Used</th>
+<td class="r data">0</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Total Observations</th>
+<td class="r data">5209</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Subjects</th>
+<td class="r data">224</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Max Obs per Subject</th>
+<td class="r data">24</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Parameters</th>
+<td class="r data">6</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">Quadrature Points</th>
+<td class="r data">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX23" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Initial Parameters">
+<caption aria-label="Initial Parameters"></caption>
+<colgroup><col/><col/><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="7" scope="colgroup">Initial Parameters</th>
+</tr>
+<tr>
+<th class="r b header" scope="col">sigma2</th>
+<th class="r b header" scope="col">a1</th>
+<th class="r b header" scope="col">a2</th>
+<th class="r b header" scope="col">s2b1</th>
+<th class="r b header" scope="col">cb12</th>
+<th class="r b header" scope="col">s2b2</th>
+<th class="r b header" scope="col">Negative<br/>Log<br/>Likelihood</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">1</td>
+<td class="r data">1</td>
+<td class="r data">1</td>
+<td class="r data">1</td>
+<td class="r data">1</td>
+<td class="r data">1</td>
+<td class="r data">6910.10003</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX24" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Iteration History">
+<caption aria-label="Iteration History"></caption>
+<colgroup><col/></colgroup><colgroup><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="6" scope="colgroup">Iteration History</th>
+</tr>
+<tr>
+<th class="r b header" scope="col">Iteration</th>
+<th class="r b header" scope="col">Calls</th>
+<th class="r b header" scope="col">Negative<br/>Log<br/>Likelihood</th>
+<th class="r b header" scope="col">Difference</th>
+<th class="r b header" scope="col">Maximum<br/>Gradient</th>
+<th class="r b header" scope="col">Slope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="r rowheader" scope="row">1</th>
+<td class="r data">13</td>
+<td class="r data">6107.8191</td>
+<td class="r data">802.281</td>
+<td class="r data">414.236</td>
+<td class="r data" style="white-space: nowrap">-16275.3</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">2</th>
+<td class="r data">17</td>
+<td class="r data">6070.1021</td>
+<td class="r data">37.71697</td>
+<td class="r data">938.480</td>
+<td class="r data" style="white-space: nowrap">-2994.47</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">3</th>
+<td class="r data">21</td>
+<td class="r data">5877.2113</td>
+<td class="r data">192.8908</td>
+<td class="r data">89.6691</td>
+<td class="r data" style="white-space: nowrap">-629.969</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">4</th>
+<td class="r data">26</td>
+<td class="r data">5837.9373</td>
+<td class="r data">39.27399</td>
+<td class="r data">243.213</td>
+<td class="r data" style="white-space: nowrap">-48.4944</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">5</th>
+<td class="r data">31</td>
+<td class="r data">5820.6395</td>
+<td class="r data">17.29785</td>
+<td class="r data">341.306</td>
+<td class="r data" style="white-space: nowrap">-130.956</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">6</th>
+<td class="r data">33</td>
+<td class="r data">5812.0982</td>
+<td class="r data">8.541256</td>
+<td class="r data">328.424</td>
+<td class="r data" style="white-space: nowrap">-79.4149</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">7</th>
+<td class="r data">35</td>
+<td class="r data">5801.6202</td>
+<td class="r data">10.47807</td>
+<td class="r data">191.017</td>
+<td class="r data" style="white-space: nowrap">-99.7737</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">8</th>
+<td class="r data">38</td>
+<td class="r data">5798.3772</td>
+<td class="r data">3.242962</td>
+<td class="r data">20.8663</td>
+<td class="r data" style="white-space: nowrap">-11.4441</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">9</th>
+<td class="r data">41</td>
+<td class="r data">5797.6248</td>
+<td class="r data">0.752379</td>
+<td class="r data">11.4524</td>
+<td class="r data" style="white-space: nowrap">-1.91686</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">10</th>
+<td class="r data">44</td>
+<td class="r data">5797.5358</td>
+<td class="r data">0.089053</td>
+<td class="r data">8.96991</td>
+<td class="r data" style="white-space: nowrap">-0.13173</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">11</th>
+<td class="r data">47</td>
+<td class="r data">5797.5181</td>
+<td class="r data">0.017636</td>
+<td class="r data">5.40814</td>
+<td class="r data" style="white-space: nowrap">-0.02957</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">12</th>
+<td class="r data">50</td>
+<td class="r data">5797.5101</td>
+<td class="r data">0.00799</td>
+<td class="r data">0.88270</td>
+<td class="r data" style="white-space: nowrap">-0.00751</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">13</th>
+<td class="r data">52</td>
+<td class="r data">5797.5016</td>
+<td class="r data">0.008517</td>
+<td class="r data">2.46677</td>
+<td class="r data" style="white-space: nowrap">-0.00493</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">14</th>
+<td class="r data">55</td>
+<td class="r data">5797.5000</td>
+<td class="r data">0.00158</td>
+<td class="r data">0.14788</td>
+<td class="r data" style="white-space: nowrap">-0.00251</td>
+</tr>
+<tr>
+<th class="r rowheader" scope="row">15</th>
+<td class="r data">58</td>
+<td class="r data">5797.5000</td>
+<td class="r data">0.000021</td>
+<td class="r data">0.005490</td>
+<td class="r data" style="white-space: nowrap">-0.00004</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX25" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Convergence Status">
+<caption aria-label="Convergence Status"></caption>
+<colgroup><col/></colgroup>
+<tbody>
+<tr>
+<td class="c data">NOTE: GCONV convergence criterion satisfied.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX26" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Fit Statistics">
+<caption aria-label="Fit Statistics"></caption>
+<colgroup><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="2" scope="colgroup">Fit Statistics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">-2 Log Likelihood</th>
+<td class="r data">11595</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">AIC (smaller is better)</th>
+<td class="r data">11607</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">AICC (smaller is better)</th>
+<td class="r data">11607</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">BIC (smaller is better)</th>
+<td class="r data">11627</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="IDX27" style="padding-bottom: 8px; padding-top: 1px">
+<table class="table" style="border-spacing: 0" aria-label="Parameter Estimates">
+<caption aria-label="Parameter Estimates"></caption>
+<colgroup><col/></colgroup><colgroup><col/><col/><col/><col/><col/><col/><col/><col/></colgroup>
+<thead>
+<tr>
+<th class="c b header" colspan="9" scope="colgroup">Parameter Estimates</th>
+</tr>
+<tr>
+<th class="b header" scope="col">Parameter</th>
+<th class="r b header" scope="col">Estimate</th>
+<th class="r b header" scope="col">Standard<br/>Error</th>
+<th class="r b header" scope="col">DF</th>
+<th class="r b header" scope="col">t&#160;Value</th>
+<th class="r b header" scope="col">Pr&#160;&gt;&#160;|t|</th>
+<th class="c b header" colspan="2" scope="colgroup">95% Confidence Limits</th>
+<th class="r b header" scope="col">Gradient</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="rowheader" scope="row">sigma2</th>
+<td class="r data">0.4325</td>
+<td class="r data">0.008864</td>
+<td class="r data">222</td>
+<td class="r data">48.79</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">0.4150</td>
+<td class="r data">0.4499</td>
+<td class="r data" style="white-space: nowrap">-0.00549</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">a1</th>
+<td class="r data">0.7302</td>
+<td class="r data">0.06691</td>
+<td class="r data">222</td>
+<td class="r data">10.91</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">0.5983</td>
+<td class="r data">0.8620</td>
+<td class="r data" style="white-space: nowrap">-0.00049</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">a2</th>
+<td class="r data" style="white-space: nowrap">-0.8049</td>
+<td class="r data">0.07615</td>
+<td class="r data">222</td>
+<td class="r data" style="white-space: nowrap">-10.57</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data" style="white-space: nowrap">-0.9549</td>
+<td class="r data" style="white-space: nowrap">-0.6548</td>
+<td class="r data">0.000599</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">s2b1</th>
+<td class="r data">0.9240</td>
+<td class="r data">0.09472</td>
+<td class="r data">222</td>
+<td class="r data">9.76</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">0.7373</td>
+<td class="r data">1.1106</td>
+<td class="r data" style="white-space: nowrap">-0.00071</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">cb12</th>
+<td class="r data" style="white-space: nowrap">-0.5767</td>
+<td class="r data">0.08915</td>
+<td class="r data">222</td>
+<td class="r data" style="white-space: nowrap">-6.47</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data" style="white-space: nowrap">-0.7524</td>
+<td class="r data" style="white-space: nowrap">-0.4010</td>
+<td class="r data" style="white-space: nowrap">-0.00216</td>
+</tr>
+<tr>
+<th class="rowheader" scope="row">s2b2</th>
+<td class="r data">1.0697</td>
+<td class="r data">0.1228</td>
+<td class="r data">222</td>
+<td class="r data">8.71</td>
+<td class="r data">&lt;.0001</td>
+<td class="r data">0.8278</td>
+<td class="r data">1.3116</td>
+<td class="r data" style="white-space: nowrap">-0.00089</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+</html>
